@@ -1,0 +1,31 @@
+
+  .explore-btn {
+    text-decoration: none;
+    padding: 10px 25px;
+    font-size: 18px;
+    color: #00FFFF;
+    background: transparent;
+    border: 2px solid #00FFFF;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 10px 3px #00FFFF;
+  }
+  
+  .explore-btn:hover {
+    background: #FF00FF; 
+    color: white;
+    border:1px solid white;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 15px 5px #FF00FF;
+  }
+  
+
+  .floating-label-dark label::after {
+    background-color: #1D2B3A !important;
+  }
+  
+  .floating-label-dark:focus-within label {
+    color: white !important;
+  }
+  
