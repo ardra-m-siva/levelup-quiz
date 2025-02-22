@@ -1,65 +1,55 @@
-import React from 'react'
-import { Container, Row, Col, Card, Button, ProgressBar } from 'react-bootstrap';
+import React, { useState } from 'react'
+import { Button, Card, Collapse } from 'react-bootstrap';
+import Profile from '../../components/Profile';
+import Streak from '../../components/Streak';
 
 const Dashboard = () => {
+    const [open, setOpen] = useState(false);
     return (
-        <div style={{ minHeight: '100vh' }} className='bg-dark'>
-            <div className='d-flex justify-content-center align-items-center pt-5'>
-                <img height={'100px'} width={'100px'} className='rounded-circle' src="https://i.pinimg.com/736x/15/ba/35/15ba35a7267854a10b9bb0e7bef75571.jpg" alt="" />
-                <h4 className='text-white ms-3'>Name</h4>
-            </div>
+        <div className='bg-dark vh-100 pt-2 text-white'>
+            <nav className='d-flex justify-content-between m-4'>
+                <h3 style={{ color: '#00FFFF' }} className='fw-bolder'>LevelUp Learn</h3>
 
+                <div className='position-relative'>
+                    <Button onClick={() => setOpen(!open)}
+                        aria-controls="example-collapse-text"
+                        aria-expanded={open}
+                        variant="dark"
+                        className="border-0 p-0"
+                    >
+                        <div className='d-flex justify-content-end'>
+                            <img
+                                src="https://static.vecteezy.com/system/resources/thumbnails/048/926/084/small_2x/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-illustration-vector.jpg"
+                                alt="Profile"
+                                className="rounded-circle shadow-lg"
+                                height="50"
+                                width="50"
+                            />
+                            </div>
+                    </Button>
+                    <Collapse in={open} >
+                        <div id="example-collapse-text" className='position-absolute mt-3 end-0'>
+                            <Card className='bg-dark' body style={{ width: '370px', border: '1px solid #00FFFF' }}>
+                                <Profile />
+                            </Card>
+                        </div>
+                    </Collapse>
+                </div>
+            </nav>
 
+            {/* streak section 🔥 */}
+            <Streak/>
+            {/* streak bar for 7 days sun-sat */}
+            {/* current streak */}
+            {/* longest streak */}
 
-            <Container className='pt-4' >
-                {/* Overview Section */}
-                <Row className="mb-4">
-                    <Col md={4}>
-                        <Card className="text-center p-3">
-                            <h5>Total Quizzes Attempted</h5>
-                            <h2>12</h2>
-                        </Card>
-                    </Col>
-                    <Col md={4}>
-                        <Card className="text-center p-3">
-                            <h5>Quizzes Completed</h5>
-                            <h2>8</h2>
-                        </Card>
-                    </Col>
-                    <Col md={4}>
-                        <Card className="text-center p-3">
-                            <h5>Current Streak</h5>
-                            <h2>5 Days</h2>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row className="mb-4">
-                    <Col>
-                        <Card className="p-3">
-                            <h5>Level Progress</h5>
-                            <ProgressBar now={60} label={`60%`} />
-                        </Card>
-                    </Col>
-                </Row>
+            {/* course section */}
+            {/* Total Quizz Attempted */}
+            {/*  Quizzes Completed*/}
+            {/* Level progress */}
 
-                {/* Active & Suggested Quizzes */}
-                <Row>
-                    <Col md={6}>
-                        <Card className="p-3">
-                            <h5>Ongoing Quiz</h5>
-                            <p>Category: Science</p>
-                            <Button variant="primary">Resume</Button>
-                        </Card>
-                    </Col>
-                    <Col md={6}>
-                        <Card className="p-3">
-                            <h5>Recommended Quiz</h5>
-                            <p>Category: History</p>
-                            <Button variant="success">Start Now</Button>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+            {/* ongoing quizes */}
+            {/* recomented quizes */}
         </div>
     )
 }

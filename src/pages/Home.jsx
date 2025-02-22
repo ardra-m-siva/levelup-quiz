@@ -15,10 +15,10 @@ const Home = () => {
               A Game Where Learning Never Stops
             </p>
           </span>
-          <div><Link to={'/register'} className='explore-btn'>Explore more</Link></div>
+          <div><Link to={'/login'} className='explore-btn'>Explore more</Link></div>
         </div>
   
-        <Hyperspeed
+        {/* <Hyperspeed
           effectOptions={{
             onSpeedUp: () => { },
             onSlowDown: () => { },
@@ -55,7 +55,7 @@ const Home = () => {
               rightCars: [0x03B3C3, 0x0E5EA5, 0x324555],
               sticks: 0x03B3C3,
             }
-          }}/>      
+          }}/>       */}
       </div>
      
    </>

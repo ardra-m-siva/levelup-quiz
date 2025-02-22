@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Auth from './pages/Auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './pages/Dashboard';
+import Game from './pages/Game';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route path={'/login'} element={<Auth isLogin={true} />} />
         <Route path={'/register'} element={<Auth  />} />
         <Route path={'/dashboard'} element={<Dashboard  />} />
+        <Route path={'/game'} element={<Game/>} />
       </Routes>
     </>
   )
