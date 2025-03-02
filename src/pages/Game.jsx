@@ -47,8 +47,6 @@ const Game = () => {
                             <Timer/>
                         </div>
                     </div>
-                   
-
                 </div>
                 <div className='border rounded mx-5 mt-4' style={{ height: '200px' }}>
                         {/* question area */}
