@@ -6,6 +6,7 @@ import Auth from './pages/Auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './pages/Dashboard';
 import Game from './pages/Game';
+import Winlose from './pages/Winlose';
 
 function App() {
 
@@ -17,7 +18,8 @@ function App() {
         <Route path={'/register'} element={<Auth  />} />
         <Route path={'/dashboard'} element={<Dashboard  />} />
         <Route path={'/game'} element={<Game/>} />
-
+        <Route path={'/win'} element={<Winlose isWin={true} />}/>
+        <Route path={'/lose'} element={<Winlose/>}/>
       </Routes>
     </>
   )

@@ -17,10 +17,7 @@ const Streak = () => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return (
         <div>
-            <div style={{
-                background: "linear-gradient(135deg, #40514E, #11999E)",
-                boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
-            }} className="text-center rounded p-4" >
+            <div style={{  background: "linear-gradient(135deg, #40514E, #11999E)", boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",width:'100%'}} className="text-center rounded p-4" >
                 {/* style={{backgroundColor:'#40514e'}} className="text-center rounded p-2" */}
                 <h2 className="fw-bold text-light mb-3">
                     Streaks <span className="text-warning">🔥</span>
