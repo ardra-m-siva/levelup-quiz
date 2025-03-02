@@ -17,6 +17,7 @@ function App() {
         <Route path={'/register'} element={<Auth  />} />
         <Route path={'/dashboard'} element={<Dashboard  />} />
         <Route path={'/game'} element={<Game/>} />
+
       </Routes>
     </>
   )

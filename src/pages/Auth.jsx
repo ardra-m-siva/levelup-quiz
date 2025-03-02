@@ -8,7 +8,7 @@ const Auth = ({ isLogin }) => {
     <div>
       <div  className='bg-black' style={{ minHeight: '100vh' }}>
       <div className='p-3'>
-        <Link to={'/'} className='btn'><i  class="fa-solid fa-arrow-left text-white fa-xl "></i></Link>
+        <Link to={'/'} className='btn'><i  className="fa-solid fa-arrow-left text-white fa-xl "></i></Link>
         </div>
         <div className='d-flex justify-content-center align-items-center mt-5'>
           {/* Registration Form */}

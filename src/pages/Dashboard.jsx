@@ -45,7 +45,8 @@ const Dashboard = () => {
             </div>
 
 
-            {/* course section */}  
+            {/* course section */} 
+             
             {/* Total Quizz Attempted */}
             {/*  Quizzes Completed*/}
             {/* Level progress */}
