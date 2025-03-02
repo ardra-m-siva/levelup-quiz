@@ -29,7 +29,6 @@ const Game = () => {
                                 </div>
                             ))}
                         </div>
-
                     </div>
 
                     {/* left end */}

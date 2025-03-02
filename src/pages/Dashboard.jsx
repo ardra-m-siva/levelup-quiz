@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { Button, Card, Collapse } from 'react-bootstrap';
 import Profile from '../../components/Profile';
 import Streak from '../../components/Streak';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false);
     return (
         <div className='bg-dark vh-100 pt-2 text-white'>
             <nav className='d-flex justify-content-between m-4'>
-                <h3 style={{ color: '#00FFFF' }} className='fw-bolder'>LevelUp Learn</h3>
+                <Link style={{ textDecoration: 'none' }} to={'/'}><h3 style={{ color: '#00FFFF' }} className='fw-bolder'>LevelUp Learn</h3></Link>
 
                 <div className='position-relative'>
                     <Button onClick={() => setOpen(!open)}
@@ -24,10 +25,11 @@ const Dashboard = () => {
                                 className="rounded-circle shadow-lg"
                                 height="50"
                                 width="50"
+                                border="2px solid white"
                             />
-                            </div>
+                        </div>
                     </Button>
-                    <Collapse in={open} >
+                    <Collapse in={open} style={{ zIndex: 1000 }}>
                         <div id="example-collapse-text" className='position-absolute mt-3 end-0'>
                             <Card className='bg-dark' body style={{ width: '370px', border: '1px solid #00FFFF' }}>
                                 <Profile />
@@ -38,12 +40,12 @@ const Dashboard = () => {
             </nav>
 
             {/* streak section 🔥 */}
-            <Streak/>
-            {/* streak bar for 7 days sun-sat */}
-            {/* current streak */}
-            {/* longest streak */}
+            <div className='container rounded py-4'>
+                <Streak />
+            </div>
 
-            {/* course section */}
+
+            {/* course section */}  
             {/* Total Quizz Attempted */}
             {/*  Quizzes Completed*/}
             {/* Level progress */}

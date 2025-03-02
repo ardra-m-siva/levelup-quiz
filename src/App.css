@@ -39,4 +39,41 @@
     border: 2px solid #11999e;
   }
 
- 
+ /* streak cpmponent */
+ .streak-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 18px;
+  border-radius: 50%;
+  background-color: #e4f9f5;
+  color: #40514e;
+  font-weight: bold;
+  border: 2px solid #11999e;
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+  
+  
+}
+
+.active {
+  
+  background-color: #30e3ca;
+  color: white;
+  transform: scale(1.2);
+  animation: pop 0.5s ease-in-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
