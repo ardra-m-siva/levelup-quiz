@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FloatingLabel, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import regImg from '../assets/image2.webp'
 
 const Auth = ({ isLogin }) => {
+  const [userDetails,setUserDetails]=useState({
+    username:"",email:"",password:""
+  })
+  console.log(userDetails);
+
+  const handleSubmit=async()=>{
+    const payload= isLogin? {email:userDetails.email,password:userDetails.password}: userDetails
+    try{
+//  make api call
+    }catch(err){
+      console.log(err);
+      
+    }
+  }
+  
   return (
     <div>
       <div  className='bg-black' style={{ minHeight: '100vh' }}>
@@ -17,43 +32,29 @@ const Auth = ({ isLogin }) => {
               <img style={{ width: '100%',maxWidth: '400px' }} src={regImg} className='img-fluid' alt="" />
             </div>
             <div style={{ flex: 1, minWidth: '400px' }}>
-              <h2 style={{ color: '#00FFFF', fontFamily: "'Poppins', sans-serif", fontSize: '40px', textAlign: 'center', marginBottom: '30px', textShadow: '0px 4px 8px rgba(0, 255, 255, 0.5)', fontWeight: '600', letterSpacing: '1px' }} >
+              <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: '40px', textAlign: 'center', marginBottom: '30px', textShadow: '0px 4px 8px rgba(0, 183, 255, 0.5)', fontWeight: '600', letterSpacing: '1px' }} className='text-info'>
                 {isLogin ? 'Login' : 'Register'}
               </h2>
   
               {/* username */}
               {!isLogin && <Form.Floating className="mb-3 floating-label-dark">
-                <Form.Control id="floatingUsername" type="text" placeholder="username" style={{ backgroundColor: '#1D2B3A', color: '#E4F9F5', border: '1px solid white' }} />
+                <Form.Control onChange={e=>setUserDetails({...userDetails,username:e.target.value})} id="floatingUsername" type="text" placeholder="username" style={{ backgroundColor: '#1D2B3A', color: '#E4F9F5', border: '1px solid white' }} />
                 <label htmlFor="floatingUsername">Username</label>
               </Form.Floating>}
   
               {/* email */}
               <Form.Floating className="mb-3 floating-label-dark">
-                <Form.Control id="floatingEmail" type="email" placeholder="name@example.com" style={{ backgroundColor: '#1D2B3A', color: '#E4F9F5', border: '1px solid white' }} />
+                <Form.Control onChange={e=>setUserDetails({...userDetails,email:e.target.value})} id="floatingEmail" type="email" placeholder="name@example.com" style={{ backgroundColor: '#1D2B3A', color: '#E4F9F5', border: '1px solid white' }} />
                 <label htmlFor="floatingEmail">Email address</label>
               </Form.Floating>
   
               {/* password */}
               <FloatingLabel className=' floating-label-dark mb-3' label="Password">
-                <Form.Control id='floatingPassword' type="password" placeholder="Password" style={{ backgroundColor: '#1D2B3A', color: '#E4F9F5', border: '1px solid white' }} />
+                <Form.Control onChange={e=>setUserDetails({...userDetails,password:e.target.value})} id='floatingPassword' type="password" placeholder="Password" style={{ backgroundColor: '#1D2B3A', color: '#E4F9F5', border: '1px solid white' }} />
                 <label htmlFor="floatingPassword">Password</label>
               </FloatingLabel>
               {/* submit button */}
-              <button
-                className="btn w-100"
-                style={{
-                  backgroundColor: '#30E3CA ',
-                  color: '#25374D',
-                  borderRadius: '40px',
-                  padding: '12px',
-                  fontSize: '20px',
-                  cursor: 'pointer',
-                  transition: '0.3s ease',
-                  boxShadow: '0px 4px 10px rgba(48, 227, 202, 0.4)',
-                }}
-                onMouseEnter={(e) => (e.target.style.transform = 'scale(1.02)')}
-                onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')}
-              >
+              <button onClick={handleSubmit} className="btn w-100 bg-info text-black" style={{   color: '#25374D',  borderRadius: '40px',  padding: '12px', fontSize: '20px',   cursor: 'pointer',  transition: '0.3s ease',  boxShadow: '0px 4px 10px rgba(48, 191, 227, 0.4)',  }} onMouseEnter={(e) => (e.target.style.transform = 'scale(1.02)')} onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')} >
                 {isLogin ? 'Login' : 'Register'}
               </button>
               <div className='mt-4 text-center' >

@@ -3,7 +3,6 @@ import { Button, Card, Collapse } from 'react-bootstrap';
 import Profile from '../../components/Profile';
 import Streak from '../../components/Streak';
 import { Link } from 'react-router-dom';
-import Game from './Game';
 
 
 const Dashboard = () => {
@@ -12,7 +11,7 @@ const Dashboard = () => {
     return (
         <div className='bg-dark vh-100 pt-2 text-white'>
             <nav className='d-flex justify-content-between m-4'>
-                <Link style={{ textDecoration: 'none' }} to={'/'}><h3 style={{ color: '#00FFFF' }} className='fw-bolder'>LevelUp Learn</h3></Link>
+                <Link style={{ textDecoration: 'none' }} to={'/'}><h3 className='fw-bolder text-info'>LevelUp Learn</h3></Link>
                 <div className='position-relative'>
                     <Button onClick={() => setOpen(!open)} aria-controls="example-collapse-text" aria-expanded={open} variant="dark" className="border-0 p-0">
                         <div className='d-flex justify-content-end'>
@@ -21,7 +20,7 @@ const Dashboard = () => {
                     </Button>
                     <Collapse in={open} style={{ zIndex: 1000 }}>
                         <div id="example-collapse-text" className='position-absolute mt-3 end-0'>
-                            <Card className='bg-dark' body style={{ width: '370px', border: '1px solid #00FFFF' }}>
+                            <Card className='bg-dark border-info' body style={{ width: '370px'}}>
                                 <Profile />
                             </Card>
                         </div>

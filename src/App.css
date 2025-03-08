@@ -44,12 +44,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  padding: 18px;
+  width: 45px;
+  height: 45px;
+  padding: 15px;
   border-radius: 50%;
-  background-color: #e4f9f5;
-  color: #40514e;
+  background-color: #2C3E50;
+  color: white;
   font-weight: bold;
   border: 2px solid #11999e;
   transition: all 0.3s ease-in-out;
@@ -60,10 +60,10 @@
 
 .active {
   
-  background-color: #30e3ca;
-  color: white;
+  background-color: #11999E;
   transform: scale(1.2);
   animation: pop 0.5s ease-in-out;
+  box-shadow:  "0px 0px 12px #4CAF50"
 }
 
 @keyframes pop {
