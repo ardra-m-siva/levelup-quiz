@@ -17,7 +17,7 @@ const Streak = () => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return (
         <div>
-            <div style={{  background: "linear-gradient(135deg, #1B2735, #415A77)", boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",width:'100%'}} className="text-center rounded p-4" >
+            <div style={{ background: "linear-gradient(135deg, #1B2735, #415A77)", boxShadow: "0px 4px 10px rgba(0,0,0,0.3)", width: '100%' }} className="text-center rounded p-4" >
                 {/* style={{backgroundColor:'#40514e'}} className="text-center rounded p-2" */}
                 <h2 className="fw-bold text-light mb-3">
                     Streaks <span className="text-warning">🔥</span>
@@ -26,8 +26,8 @@ const Streak = () => {
                 <div className='row align-items-center '>
                     {/* Streak Info */}
                     <div className="col fs-4 text-light border-end">
-                        <p className="fw-bold">Current Streak: <span  style={{ color: "#4CAF50",fontSize: "1.5rem",fontWeight: "bold",}}>{9} Days</span></p>
-                        <p className="fw-bold">Longest Streak: <span style={{ color: "#FFA500", fontSize: "1.5rem", fontWeight: "bold",}}>{16} Days</span></p>
+                        <p className="fw-bold">Current Streak: <span style={{ color: "#4CAF50", fontSize: "1.5rem", fontWeight: "bold", }}>{9} Days</span></p>
+                        <p className="fw-bold">Longest Streak: <span style={{ color: "#FFA500", fontSize: "1.5rem", fontWeight: "bold", }}>{16} Days</span></p>
                     </div>
 
                     {/* Streak Bar */}

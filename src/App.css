@@ -1,46 +1,49 @@
 /* langing page */
- 
- .explore-btn {
-    text-decoration: none;
-    padding: 10px 25px;
-    font-size: 18px;
-    color: #00FFFF;
-    background: transparent;
-    border: 2px solid #00FFFF;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 0px 10px 3px #00FFFF;
-  }
-  
-  .explore-btn:hover {
-    background: #FF00FF; 
-    color: white;
-    border:1px solid white;
-    transform: scale(1.1);
-    box-shadow: 0px 0px 15px 5px #FF00FF;
-  }
-  
+
+::-webkit-scrollbar{   
+  width: 10px;
+}
+ ::-webkit-scrollbar-track{
+  background-color: #1D2B3A;
+ }
+ ::-webkit-scrollbar-thumb{
+  background-color: #1496c5;
+  border-radius: 15px;
+ }
+
+
+.explore-btn:hover {  
+  background: #FF00FF;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.1);
+}
+
 /* regiter & login page  */
-  .floating-label-dark label::after {
-    background-color: #1D2B3A !important;
-  }
-  
-  .floating-label-dark:focus-within label {
-    color: white !important;
-  }
+.floating-label-dark label::after {
+  background-color: #1D2B3A !important;
+}
 
-  /* game page - progress bar */
-  .dot {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #e4f9f5;
-    border: 2px solid #11999e;
-  }
+.floating-label-dark:focus-within label {
+  color: white !important;
+}
 
- /* streak cpmponent */
- .streak-dot {
+.floating-label-dark label {
+  color: white !important;
+}
+
+
+
+/* game page - progress bar */
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e4f9f5;
+  border: 2px solid #11999e;
+}
+
+/* streak cpmponent */
+.streak-dot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,25 +57,27 @@
   border: 2px solid #11999e;
   transition: all 0.3s ease-in-out;
   font-size: 14px;
-  
-  
+
+
 }
 
 .active {
-  
+
   background-color: #11999E;
   transform: scale(1.2);
   animation: pop 0.5s ease-in-out;
-  box-shadow:  "0px 0px 12px #4CAF50"
+  box-shadow: "0px 0px 12px #4CAF50"
 }
 
 @keyframes pop {
   0% {
     transform: scale(1.2);
   }
+
   50% {
     transform: scale(1.3);
   }
+
   100% {
     transform: scale(1.2);
   }

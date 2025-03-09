@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Collapse } from 'react-bootstrap';
-import Profile from '../../components/Profile';
-import Streak from '../../components/Streak';
+import Profile from '../components/Profile';
+import Streak from '../components/Streak';
 import { Link } from 'react-router-dom';
 
 

@@ -33,7 +33,7 @@ const Home = () => {
               transition={{ duration: 1.2 }}
               className="mt-4"
             >
-              <Link to={'/login'} className="btn btn-info fw-semibold px-4 py-2 shadow-lg">
+              <Link to={'/login'} className=" btn btn-info fw-semibold px-4 py-2 shadow-lg explore-btn">
                 Explore More
               </Link>
               {/* <div><Link to={'/login'} className='explore-btn'>Explore more</Link></div> */}
