@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Timer from '../components/Timer'
+import { fetchQuestionsApi } from '../services/allApi';
 
 const Game = () => {
+    const [questions, setQuestions] = useState([]); // Store fetched questions
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question
+    useEffect(() => {
+        fetchQuestions();
+    }, []);
+
+    const fetchQuestions = async () => {
+
+        try {
+            const response = await fetchQuestionsApi("hard", "javascript")
+            console.log(response);
+
+            setQuestions(response.data);
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        }
+    };
     return (
         <>
             <div className='bg-dark min-vh-100'>
@@ -21,7 +39,7 @@ const Game = () => {
                     {/* current question number out of total */}
                     <div className="container text-center mt-3">
                         <h2 className="mb-3 ">
-                            Question <span style={{ color: "#30e3ca" }}>{6}</span> of{" "}
+                            Question <span style={{ color: "#30e3ca" }}>{1}</span> of{" "}
                             <span style={{ color: "#11999e" }}>{10}</span>
                         </h2>
                         <div className="d-flex justify-content-center gap-2 mt-2">
@@ -38,27 +56,44 @@ const Game = () => {
                         </div>
                         {/* difficulty level */}
                         <div className='col '>
-                            <div  className='text-center' style={{ backgroundColor: '#09585b', padding: '8px' }}>
+                            <div className='text-center' style={{ backgroundColor: '#09585b', padding: '8px' }}>
                                 Difficulty Level : <span>HARD</span>
                             </div>
                         </div>
                         {/* timer */}
                         <div className="col">
-                            <Timer/>
+                            <Timer />
                         </div>
                     </div>
                 </div>
-                <div className='border rounded mx-5 mt-4' style={{ height: '200px' }}>
-                        {/* question area */}
-                    </div>  
+                <div className='border rounded mx-5 mt-4 text-white'>
+                    {/* question area */}
+                    {questions?.length > 0 ?
+                        <>
+                            <h4 className='m-3'>Q. {questions[currentQuestionIndex].question}</h4>
+                            {/* Answer choices */}
+                            <div style={{ width: '90%' }} className="my-4">
+                                {Object.entries(questions[currentQuestionIndex].answers)
+                                    .filter(([key, value]) => value) //removes null values
+                                    .map(([key, value]) => (
+                                        <button key={key} style={{ width: '95%' }} className="btn btn-outline-light d-block mx-3 my-2">
+                                            {value}
+                                        </button>
+                                    ))}
+                            </div>
+                        </>
+                        :
+                        <p>Loading questions...</p>
+                    }
+                </div>
 
                 <div className='d-flex justify-content-center'>
-                    <div className='position-fixed bottom-0 w-50 d-flex align-items-center justify-content-evenly text-white' style={{ height: '50px', backgroundColor: '#09585b' , zIndex:20,  padding: "10px 0" }}>
+                    <div className='position-fixed bottom-0 w-50 d-flex align-items-center justify-content-evenly text-white' style={{ height: '50px', backgroundColor: '#09585b', zIndex: 20, padding: "10px 0" }}>
                         {/* total hints logo */}
-                            <i class="fa-regular fa-clock fa-xl"></i>
-                            <i class="fa-solid fa-clock-rotate-left fa-xl"></i>
-                            <i class="fa-solid fa-circle-pause fa-xl"></i>
-                            <i class="fa-solid fa-forward fa-xl"></i>
+                        <i className="fa-regular fa-clock fa-xl"></i>
+                        <i className="fa-solid fa-clock-rotate-left fa-xl"></i>
+                        <i className="fa-solid fa-circle-pause fa-xl"></i>
+                        <i className="fa-solid fa-forward fa-xl"></i>
                     </div>
                 </div>
             </div>

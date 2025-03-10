@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 const Dashboard = () => {
-
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);    
     return (
         <div className='bg-dark vh-100 pt-2 text-white'>
             <nav className='d-flex justify-content-between m-4'>
