@@ -2,25 +2,58 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Timer from '../components/Timer'
 import { fetchQuestionsApi } from '../services/allApi';
+import { div } from 'framer-motion/client';
+import { Spinner } from 'react-bootstrap';
 
 const Game = () => {
     const [questions, setQuestions] = useState([]); // Store fetched questions
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false)
+    const [selectedAnswer, setSelectedAnswer] = useState("")
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question
+    console.log(questions);
+
     useEffect(() => {
-        fetchQuestions();
+         fetchQuestions();
     }, []);
 
     const fetchQuestions = async () => {
-
         try {
-            const response = await fetchQuestionsApi("hard", "javascript")
-            console.log(response);
-
+            const response = await fetchQuestionsApi("easy", "javascript")
             setQuestions(response.data);
+            setIsLoaded(true);
         } catch (error) {
             console.error("Error fetching questions:", error);
         }
     };
+    const handleAnswer =async (selectedKey) => {
+        const currentQuestion = questions[currentQuestionIndex]
+        
+        const correctAnswer = Object.entries(currentQuestion.correct_answers).filter(([key, value]) => value == "true").map(([key]) => key.replace("_correct", ""))
+        const isCorrectAnswer = correctAnswer.includes(selectedKey);
+        setSelectedAnswer(selectedKey);
+        setIsCorrect(isCorrectAnswer);
+
+        setTimeout(async() => {
+            if (isCorrectAnswer) {
+                if (currentQuestionIndex < questions.length - 1) {
+                    setCurrentQuestionIndex(currentQuestionIndex + 1);
+                } else {
+                    alert("Level Completed");
+                }
+            } else {
+                alert("Game Over");
+                await fetchQuestions()
+                setCurrentQuestionIndex(0);
+            }
+
+            // Reset answer state
+            setSelectedAnswer("");
+            setIsCorrect(false);
+        }, 1000);
+    }
+
+
     return (
         <>
             <div className='bg-dark min-vh-100'>
@@ -62,28 +95,40 @@ const Game = () => {
                         </div>
                         {/* timer */}
                         <div className="col">
-                            <Timer />
+                            <Timer start={isLoaded} />
                         </div>
                     </div>
                 </div>
                 <div className='border rounded mx-5 mt-4 text-white'>
                     {/* question area */}
-                    {questions?.length > 0 ?
-                        <>
-                            <h4 className='m-3'>Q. {questions[currentQuestionIndex].question}</h4>
-                            {/* Answer choices */}
-                            <div style={{ width: '90%' }} className="my-4">
-                                {Object.entries(questions[currentQuestionIndex].answers)
-                                    .filter(([key, value]) => value) //removes null values
-                                    .map(([key, value]) => (
-                                        <button key={key} style={{ width: '95%' }} className="btn btn-outline-light d-block mx-3 my-2">
-                                            {value}
-                                        </button>
-                                    ))}
+                    {
+                        isLoaded ? (
+                            questions?.length > 0 ? (
+                                <>
+                                    <h4 className='m-4'>Q. {questions[currentQuestionIndex].question}</h4>
+                                    {/* Answer choices */}
+                                    <div style={{ width: '100%' }} className="my-4 ">
+                                        {Object.entries(questions[currentQuestionIndex].answers)
+                                            .filter(([key, value]) => value) //removes null values
+                                            .map(([key, value]) => (
+                                                <button
+                                                    key={key}
+                                                    onClick={() => handleAnswer(key)}
+                                                    className="btn btn-outline-light d-block mx-auto my-3"
+                                                    style={{ width: '90%',
+                                                         backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : "transparent", color: selectedAnswer === key ? "white" : "inherit",
+                                                         transition: "background 0.3s ease" }}
+                                                    disabled={selectedAnswer != ""} >
+                                                    {value}
+                                                </button>
+                                            ))}
+                                    </div>
+                                </>
+                            ) : <p className="text-center">No questions available</p>
+                        ) :
+                            <div className="d-flex justify-content-center align-items-center m-5">
+                                <Spinner animation="border" variant="light" />
                             </div>
-                        </>
-                        :
-                        <p>Loading questions...</p>
                     }
                 </div>
 
