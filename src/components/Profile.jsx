@@ -3,6 +3,7 @@ import { Button, Modal } from 'react-bootstrap'
 import userProfileImg from '../assets/userProfile.jpg'
 import profileUpload from '../assets/uploadProfile.png'
 import { editProfileApi } from '../services/allApi'
+import serverUrl from '../services/serverUrl'
 
 const Profile = () => {
   const [updateProfile, setUpdateProfile] = useState({
@@ -17,10 +18,10 @@ const Profile = () => {
   const handleShow = () => setShow(true);
   useEffect(() => {
     if (sessionStorage.getItem('user')) {
-      const playerDetails=(JSON.parse(sessionStorage.getItem("user")))
+      const playerDetails = (JSON.parse(sessionStorage.getItem("user")))
       setPlayer(playerDetails)
-      setUpdateProfile({ username: playerDetails.username, email: playerDetails.email, password: playerDetails.password ,profilePic:""})
-      setExistingProfilePic({ profilePic: playerDetails.profilePic })
+      setUpdateProfile({ username: playerDetails.username, email: playerDetails.email, password: playerDetails.password, profilePic: "" })
+      setExistingProfilePic(playerDetails.profilePic)
       setPreview("")
     }
   }, [])
@@ -32,37 +33,43 @@ const Profile = () => {
       setPreview("")
     }
   }, [updateProfile.profilePic])
+  console.log("existingProfilePic", existingProfilePic);
+  console.log("preview", preview);
 
 
-  const handleEdit =async () => {
+
+  const handleEdit = async () => {
     const { username, email, password, profilePic } = updateProfile
     console.log(updateProfile);
-    
+
     if (username && profilePic) {
       const reqBody = new FormData()
       reqBody.append("username", username)
       reqBody.append("email", email)
       reqBody.append("password", password)
       preview ? reqBody.append("profilePic", profilePic) : reqBody.append("profilePic", existingProfilePic)
-      const token =sessionStorage.getItem('token')
-      if(token){
-        const reqHeaders={
+      const token = sessionStorage.getItem('token')
+      if (token) {
+        const reqHeaders = {
           "Content-Type": "multipart/form-data",
-          "Authorization":`Bearer ${token}`
+          "Authorization": `Bearer ${token}`
         }
-        console.log(reqBody);        
-        
-        try{
-          const result= await editProfileApi(reqBody,reqHeaders)
+        console.log(reqBody);
+
+        try {
+          const result = await editProfileApi(reqBody, reqHeaders)
           console.log(result);
-          
-          if(result.status==200){
+
+          if (result.status == 200) {
             console.log(result.data);
+            sessionStorage.setItem("users", JSON.stringify(result.data))
             // set the sessionstorsge with new value
+            setPlayer(result.data);
+            setExistingProfilePic(result.data.profilePic);
           }
-        }catch(err){
+        } catch (err) {
           console.log(err);
-          
+
         }
       }
       handleClose()
@@ -72,8 +79,8 @@ const Profile = () => {
   }
   return (
     <>
-      <div className="bg-dark d-flex flex-column align-items-center text-white">
-        <div className="w-100 bg-info" style={{ height: "100px" }}>
+      <div className="d-flex flex-column align-items-center text-dark">
+        <div className="w-100 " style={{ height: "100px" }}>
           <h2 className='text-center text-dark fs-6 mt-3 px-3'>{player.username?.split(" ")[0]}</h2>
 
         </div>
@@ -81,11 +88,14 @@ const Profile = () => {
         <div className="position-relative mt-5 text-center p-4 rounded shadow-lg" style={{ maxWidth: "400px", width: "90%" }}>
           <div className="position-absolute  start-50 translate-middle" style={{ top: "-50px" }}>
             {/* profile image is here */}
-            <img src={userProfileImg}
-              alt="Profile"
-              className="rounded-circle "
-              style={{ width: "70px", height: "70px", border: '5px solid #2C3E50 ' }}
-            />
+            {
+              existingProfilePic == "" ?
+                <img src={preview ? preview : userProfileImg} alt="Profile picture" className="rounded-circle " style={{ width: "100px", height: "100px", border: '5px solid #2C3E50 ' }} />
+                :
+                <img className="rounded-circle " style={{ width: "100px", height: "100px", border: '5px solid #2C3E50 ' }} src={preview ? preview : `${serverUrl}/uploads/${existingProfilePic}`} alt="Profile picture" />
+
+            }
+
           </div>
 
           {/* Profile Details */}
@@ -106,7 +116,7 @@ const Profile = () => {
         <Modal.Header closeButton style={{ backgroundColor: "#11999E", color: "white", borderBottom: "none" }}>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
-        <Modal.Body className='bg-dark' style={{ color: "#40514E", fontSize: "18px" }}>
+        <Modal.Body  style={{ color: "#40514E", fontSize: "18px" }}>
           <div className='d-flex justify-content-between align-items-center'>
             <label htmlFor='inputImg'>
               {/* image upload here */}
@@ -119,7 +129,7 @@ const Profile = () => {
             </div>
           </div>
         </Modal.Body>
-        <Modal.Footer className='bg-dark' style={{ borderTop: "none" }}>
+        <Modal.Footer style={{ borderTop: "none" }}>
           <Button variant="secondary" onClick={handleClose} style={{ backgroundColor: "#40514E", border: "none" }}>
             Close
           </Button>

@@ -16,7 +16,6 @@ export const editProfileApi = (reqBody, reqHeader) => {
 // fetching questions 
 
 export const fetchQuestionsApi = (difficulty,subject) => {
-    return commonApi('GET', `https://quizapi.io/api/v1/questions?limit=10&difficulty=${difficulty}&subject=${subject}`, {}, {
-        "Content-Type": "application/json",
-        "X-Api-Key": process.env.REACT_APP_API_KEY  // API Key required for authorization);
-    })}
+    return commonApi('GET',`${serverUrl}/api/questions?difficulty=${difficulty}&subject=${subject}`) 
+}
+    

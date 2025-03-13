@@ -1,26 +1,22 @@
 /* langing page */
 
-::-webkit-scrollbar{   
-  width: 10px;
+::-webkit-scrollbar {
+  width: 8px;
 }
- ::-webkit-scrollbar-track{
-  background-color: #1D2B3A;
- }
- ::-webkit-scrollbar-thumb{
-  background-color: #1496c5;
+
+::-webkit-scrollbar-track {
+  background-color: #909090;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1a989c;
   border-radius: 15px;
- }
-
-
-.explore-btn:hover {  
-  background: #FF00FF;
-  transition: all 0.3s ease-in-out;
-  transform: scale(1.1);
 }
+
 
 /* regiter & login page  */
 .floating-label-dark label::after {
-  background-color: #1D2B3A !important;
+  background-color: #11999E !important;
 }
 
 .floating-label-dark:focus-within label {
@@ -83,4 +79,15 @@
   }
 }
 
-/* spinner of timer */
+ul {
+  list-style: none;
+}
+
+.item {
+  text-decoration: none;
+  color: white;
+}
+
+.item:hover:hover {
+  text-decoration: underline;
+}

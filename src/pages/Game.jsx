@@ -1,52 +1,58 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Timer from '../components/Timer'
 import { fetchQuestionsApi } from '../services/allApi';
-import { div } from 'framer-motion/client';
 import { Spinner } from 'react-bootstrap';
 
 const Game = () => {
+    const [currentLevel, setCurrentLevel] = useState(1)
     const [questions, setQuestions] = useState([]); // Store fetched questions
     const [isLoaded, setIsLoaded] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false)
     const [selectedAnswer, setSelectedAnswer] = useState("")
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question
-    console.log(questions);
-
+    const didFetch = useRef(false);
     useEffect(() => {
-         fetchQuestions();
+        if (!didFetch.current) {
+            fetchQuestions();
+            didFetch.current = true; // Prevent future calls
+        }
     }, []);
 
     const fetchQuestions = async () => {
         try {
             const response = await fetchQuestionsApi("easy", "javascript")
+            console.log(response.data);
+
             setQuestions(response.data);
             setIsLoaded(true);
         } catch (error) {
             console.error("Error fetching questions:", error);
         }
     };
-    const handleAnswer =async (selectedKey) => {
+    const handleAnswer = async (selectedKey) => {
         const currentQuestion = questions[currentQuestionIndex]
-        
+
         const correctAnswer = Object.entries(currentQuestion.correct_answers).filter(([key, value]) => value == "true").map(([key]) => key.replace("_correct", ""))
         const isCorrectAnswer = correctAnswer.includes(selectedKey);
         setSelectedAnswer(selectedKey);
         setIsCorrect(isCorrectAnswer);
 
-        setTimeout(async() => {
+        setTimeout(async () => {
             if (isCorrectAnswer) {
                 if (currentQuestionIndex < questions.length - 1) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                 } else {
                     alert("Level Completed");
+                    setCurrentLevel(currentLevel + 1)
+                    await fetchQuestions()
+                    setCurrentQuestionIndex(0)
                 }
             } else {
                 alert("Game Over");
                 await fetchQuestions()
                 setCurrentQuestionIndex(0);
             }
-
             // Reset answer state
             setSelectedAnswer("");
             setIsCorrect(false);
@@ -56,28 +62,28 @@ const Game = () => {
 
     return (
         <>
-            <div className='bg-dark min-vh-100'>
-                <nav style={{ borderRadius: '0px 0px 300px 300px', backgroundColor: '#00FFFF' }} className='text-dark'>
+            <div className=' min-vh-100'>
+                <nav style={{ borderRadius: '0px 0px 300px 300px', backgroundColor: '#11999E' }} className='text-dark'>
                     {/* back button */}
                     <div className='p-2 d-flex justify-content-between'>
-                        <Link to={'/dashboard'} className='btn text-start'><i className="fa-solid fa-arrow-left text-dark fa-xl "></i></Link>
+                        <Link to={'/dashboard'} className='btn text-start'><i className="fa-solid fa-arrow-left text-light fa-xl "></i></Link>
                         {/* help button */}
-                        <div className='btn'><i className="fa-solid fa-circle-info fa-2xl text-dark"></i></div>
+                        <div className='btn'><i className="fa-solid fa-circle-info fa-2xl text-light"></i></div>
                     </div>
                     {/* level  */}
-                    <h2 className='text-center pb-3 fw-bold'>Level <span>1</span></h2>
+                    <h2 className='text-center text-light pb-3 fw-bold'>Level <span>{currentLevel}</span></h2>
                 </nav>
 
-                <div className='text-light'>
+                <div >
                     {/* current question number out of total */}
                     <div className="container text-center mt-3">
                         <h2 className="mb-3 ">
-                            Question <span style={{ color: "#30e3ca" }}>{1}</span> of{" "}
+                            Question <span style={{ color: "#30e3ca" }}>{currentQuestionIndex + 1}</span> of{" "}
                             <span style={{ color: "#11999e" }}>{10}</span>
                         </h2>
                         <div className="d-flex justify-content-center gap-2 mt-2">
                             {Array.from({ length: 10 }, (_, index) => (
-                                <div key={index} className="dot" style={{ width: "16px", height: "16px", borderRadius: "50%", background: index < 6 ? "#30e3ca" : "#e4f9f5", border: "2px solid #11999e", transition: "background 0.3s ease" }}>
+                                <div key={index} className="dot" style={{ width: "16px", height: "16px", borderRadius: "50%", background: index < currentQuestionIndex + 1 ? "#30e3ca" : "#e4f9f5", border: "2px solid #11999e", transition: "background 0.3s ease" }}>
                                 </div>
                             ))}
                         </div>
@@ -89,17 +95,17 @@ const Game = () => {
                         </div>
                         {/* difficulty level */}
                         <div className='col '>
-                            <div className='text-center' style={{ backgroundColor: '#09585b', padding: '8px' }}>
-                                Difficulty Level : <span>HARD</span>
+                            <div className='text-center text-white' style={{ backgroundColor: '#09585b', padding: '8px' }}>
+                                Difficulty Level : <span>EASY</span>
                             </div>
                         </div>
                         {/* timer */}
                         <div className="col">
-                            <Timer start={isLoaded} />
+                            <Timer start={isLoaded} key={currentQuestionIndex} />
                         </div>
                     </div>
                 </div>
-                <div className='border rounded mx-5 mt-4 text-white'>
+                <div className='border border-dark rounded mx-5 mt-4 '>
                     {/* question area */}
                     {
                         isLoaded ? (
@@ -114,10 +120,12 @@ const Game = () => {
                                                 <button
                                                     key={key}
                                                     onClick={() => handleAnswer(key)}
-                                                    className="btn btn-outline-light d-block mx-auto my-3"
-                                                    style={{ width: '90%',
-                                                         backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : "transparent", color: selectedAnswer === key ? "white" : "inherit",
-                                                         transition: "background 0.3s ease" }}
+                                                    className="btn btn-outline-dark d-block mx-auto my-3"
+                                                    style={{
+                                                        width: '90%',
+                                                        backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : "transparent", color: selectedAnswer === key ? "white" : "inherit",
+                                                        transition: "background 0.3s ease"
+                                                    }}
                                                     disabled={selectedAnswer != ""} >
                                                     {value}
                                                 </button>
@@ -127,7 +135,7 @@ const Game = () => {
                             ) : <p className="text-center">No questions available</p>
                         ) :
                             <div className="d-flex justify-content-center align-items-center m-5">
-                                <Spinner animation="border" variant="light" />
+                                <Spinner animation="border" variant="dark" />
                             </div>
                     }
                 </div>
@@ -135,10 +143,10 @@ const Game = () => {
                 <div className='d-flex justify-content-center'>
                     <div className='position-fixed bottom-0 w-50 d-flex align-items-center justify-content-evenly text-white' style={{ height: '50px', backgroundColor: '#09585b', zIndex: 20, padding: "10px 0" }}>
                         {/* total hints logo */}
-                        <i className="fa-regular fa-clock fa-xl"></i>
-                        <i className="fa-solid fa-clock-rotate-left fa-xl"></i>
-                        <i className="fa-solid fa-circle-pause fa-xl"></i>
-                        <i className="fa-solid fa-forward fa-xl"></i>
+                       <button className='btn text-white'><i className="fa-regular fa-clock fa-xl"></i></button>
+                        <button className='btn text-white'><i className="fa-solid fa-clock-rotate-left fa-xl"></i></button>
+                        <button className='btn text-white'><i className="fa-solid fa-circle-pause fa-xl"></i></button>
+                        <button className='btn text-white'><i className="fa-solid fa-forward fa-xl"></i></button>
                     </div>
                 </div>
             </div>
