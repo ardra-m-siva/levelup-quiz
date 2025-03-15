@@ -21,10 +21,10 @@ const Auth = ({ isLogin }) => {
             setLoginedToSite(true)
             sessionStorage.setItem("user", JSON.stringify(result.data.user))
             sessionStorage.setItem("token", result.data.token)
-            setInterval(() => {
+            setTimeout(() => {
               setUserDetails({ username: "", email: "", password: "" })
-              navigate('/dashboard')
               setLoginedToSite(false)
+              navigate('/dashboard')
             }, 2000)
           } else {
             alert(result.response.data)

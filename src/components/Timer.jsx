@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
-const Timer = ({start}) => {
+const Timer = ({start,handleTimeUp}) => {
     const [timeLeft, setTimeLeft] = useState(15)
     useEffect(() => {
-        if (!start|| timeLeft <= 0) return;
+        if (!start|| timeLeft <= 0) {
+            if (timeLeft === 0) handleTimeUp();
+            return;
+        }
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => prevTime - 1)
         }, 1000)
         return () => clearInterval(timer)
-    }, [start,timeLeft])
+    }, [start,timeLeft,handleTimeUp])
     return (
         <div className='d-flex justify-content-end align-items-center me-4'>
             <div className='border border-black rounded p-2 shagow-lg text-center' style={{ minWidth: "100px"}}>

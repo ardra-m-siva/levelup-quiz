@@ -4,8 +4,10 @@ import mainImg from '../assets/img2.jpg'
 import { motion } from 'framer-motion';
 import { Button, Card } from 'react-bootstrap';
 import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+const navigate =useNavigate()
   const [isLoginTo, setIsLoginTo] = useState(false)
   useEffect(() => {
     if (sessionStorage.getItem('user')) {
@@ -13,21 +15,22 @@ const Home = () => {
     }
   }, [])
 
-  const handleSubject = (lesson) => {
+  const handleSubject = async (lesson) => {
     if (!isLoginTo) {
       alert("Please Login")
     } else {
-      alert("api")
+      // setQuizData({ subject: lesson.id, difficulty: "easy" })
+      navigate('/game')
     }
   }
 
   const lessons = [
-    { title: "JavaScript Basics", description: "Learn the fundamentals of JavaScript.", link: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/640px-Unofficial_JavaScript_logo_2.svg.png" },
-    { title: "React Fundamentals", description: "Understand the core concepts of React.", link: "https://miro.medium.com/v2/resize:fit:1400/0*y6IcBe5J1AdALzXw.png" },
-    { title: "Advanced CSS", description: "Master flexbox, grid, and animations.", link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrmcw_0JrWn3MbaKxWcXeJLn-92hHBdLHIiQ&s" },
-    { title: "Node.js & Express", description: "Explore backend development with Node.js.", link: 'https://lh3.googleusercontent.com/csXm00pBuJvmhsXcI1XauxFGrE66sHBbWI9QyKY0lt2h55a1VaKl6F5TrlH0wBC_aijloKw9lh8a=e14-rj-sc0xffffff-w1270' },
+    { id:'javascript', title: "JavaScript Basics", description: "Learn the fundamentals of JavaScript.", link: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/640px-Unofficial_JavaScript_logo_2.svg.png" },
+    {  id:'react',title: "React Fundamentals", description: "Understand the core concepts of React.", link: "https://miro.medium.com/v2/resize:fit:1400/0*y6IcBe5J1AdALzXw.png" },
+    {id:'css', title: "Advanced CSS", description: "Master flexbox, grid, and animations.", link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrmcw_0JrWn3MbaKxWcXeJLn-92hHBdLHIiQ&s" },
+    { id:'nodejs', title: "Node.js & Express", description: "Explore backend development with Node.js.", link: 'https://lh3.googleusercontent.com/csXm00pBuJvmhsXcI1XauxFGrE66sHBbWI9QyKY0lt2h55a1VaKl6F5TrlH0wBC_aijloKw9lh8a=e14-rj-sc0xffffff-w1270' },
     {
-      title: "MongoDB Essentials", description: "Learn how to work with NoSQL databases.", link: "https://mma.prnewswire.com/media/384058/MongoDB_Logo.jpg?p=facebook"
+      id:'mongodb',title: "MongoDB Essentials", description: "Learn how to work with NoSQL databases.", link: "https://mma.prnewswire.com/media/384058/MongoDB_Logo.jpg?p=facebook"
     },
   ];
   return (
