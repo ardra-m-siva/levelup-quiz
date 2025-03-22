@@ -5,7 +5,7 @@ import winImg from '../assets/happyGhost.png'
 const Winlose = ({ isWin }) => {
     return (
         <>
-            <div className='d-flex justify-content-center align-items-center 'style={{backgroundColor:'#D1F8EF'}}>
+            <div className='d-flex justify-content-center align-items-center 'style={{backgroundColor:'#BFEAF5'}}>
                 <div className='border rounded d-flex flex-wrap justify-content-evenly align-items-center w-100' style={{  maxWidth: '900px' }}>
                     <img width={'50%'} src={isWin ? winImg : loseImg} alt={isWin ? "Winner celebration" : "Losing game"} className='img-fluid' />
                     <div className='py-3 text-center' style={{ width: '45%' }}>

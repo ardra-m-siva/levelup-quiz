@@ -19,8 +19,9 @@ const Profile = () => {
   useEffect(() => {
     if (sessionStorage.getItem('user')) {
       const playerDetails = (JSON.parse(sessionStorage.getItem("user")))
+      
       setPlayer(playerDetails)
-      setUpdateProfile({ username: playerDetails.username, email: playerDetails.email, password: playerDetails.password, profilePic: "" })
+      setUpdateProfile({...updateProfile, username: playerDetails.username, email: playerDetails.email, password: playerDetails.password })
       setExistingProfilePic(playerDetails.profilePic)
       setPreview("")
     }
@@ -29,13 +30,12 @@ const Profile = () => {
   useEffect(() => {
     if (updateProfile.profilePic) {
       setPreview(URL.createObjectURL(updateProfile.profilePic))
+      console.log("preview", preview);
+
     } else {
       setPreview("")
     }
   }, [updateProfile.profilePic])
-  console.log("existingProfilePic", existingProfilePic);
-  console.log("preview", preview);
-
 
 
   const handleEdit = async () => {
@@ -54,18 +54,13 @@ const Profile = () => {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${token}`
         }
-        console.log(reqBody);
-
         try {
           const result = await editProfileApi(reqBody, reqHeaders)
           console.log(result);
 
           if (result.status == 200) {
-            console.log(result.data);
-            sessionStorage.setItem("users", JSON.stringify(result.data))
-            // set the sessionstorsge with new value
+            sessionStorage.setItem("user", JSON.stringify(result.data))
             setPlayer(result.data);
-            setExistingProfilePic(result.data.profilePic);
           }
         } catch (err) {
           console.log(err);

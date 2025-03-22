@@ -2,105 +2,67 @@ import React, { useState } from 'react'
 import Streak from '../components/Streak'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
-import { useNavigate } from 'react-router-dom';
-
-
-const subjects = ["Math", "Science", "History", "Programming", "English"];
-const difficultyLevels = ["Easy", "Medium", "Hard"];
+import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
+    const navigate=useNavigate()
+    const [subjectInfo, setSubjectInfo] = useState({ subject: "", title: "", difficulty: "easy" })
+    function handleSubjectSelection() {
+        navigate('/game',{state:subjectInfo})
+    }
 
-    const [selectedSubject, setSelectedSubject] = useState(null);
-    const [selectedDifficulty, setSelectedDifficulty] = useState(null);
-    const navigate = useNavigate();
-
-    const handleStartQuiz = () => {
-        if (selectedSubject && selectedDifficulty) {
-            // navigate(`/quiz?subject=${selectedSubject}&difficulty=${selectedDifficulty}`);
-        } else {
-            alert("Please select both subject and difficulty level!");
-        }
-    };
     return (
         <div>
             <Header />
-            <div className='vh-100 pt-2 text-white'>
+            <div className='min-vh-100 pt-2 text-white' >
                 <div className='container rounded py-4'>
                     <Streak />
                 </div>
-                <div className=" d-flex justify-content-center align-items-center  text-black">
-                    <div className="border rounded p-4 text-center" style={{ width: "60%" }}>
-                        <h1 className="mb-3">📜 Game Instructions</h1>
-                        <ul className="text-start">
-                            <li>You have <b>10 seconds</b> for each of the first 9 questions.</li>
-                            <li>The <b>last question</b> has only <b>8 seconds</b>!</li>
-                            <li>If you answer <b>correctly</b>, the next question appears automatically.</li>
-                            <li>If you answer <b>wrongly</b>, the level restarts from <b>Question 1</b>.</li>
-                            <li>The game tests your speed and accuracy. Good luck! 🎯</li>
-                        </ul>
+                <div className='container'>
+                    <div className='row ' >
+                        <div className='col-lg-6 d-flex justify-content-center align-items-center text-black'>
+                            <div className='border rounded m-4 p-4 text-center ' style={{ width: '86%' }}>
+                                <h3>Start Learning</h3>
+                                <select value={subjectInfo.subject} onChange={e => setSubjectInfo({ ...subjectInfo, subject: e.target.value })} name="subject" id="" className='form-control my-3 w-100' >
+                                    <option value="" disabled selected >Select Subject</option>
+                                    <option value="linux">Linux</option>
+                                    <option value="bash">Bash</option>
+                                    <option value="docker">Docker</option>
+                                    <option value="react">React</option>
+                                    <option value="nodejs">NodeJs</option>
+                                    <option value="Next.Js">NextJs</option>
+                                    <option value="vuejs">VueJs</option>
+                                    <option value="mysql">MySQL</option>
+                                    <option value="html">HTML</option>
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="python">Python</option>
+                                    <option value="django">Django</option>
+                                </select>
+                                <select onChange={e => setSubjectInfo({ ...subjectInfo, difficulty: e.target.value })} name="difficulty" id="" className='form-control my-3 w-100 '>
+                                    <option value="" selected disabled>Select Difficulty</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                                <button onClick={handleSubjectSelection} className='btn m-3 text-light' style={{backgroundColor:'#11999E'}}>Start</button>
+                            </div>
+                        </div>
+                        <div className="col-lg-6 d-flex justify-content-center align-items-center text-black">
+                            <div className="border rounded p-4 text-center" style={{ width: '86%' }}>
+                                <h1 className="mb-3">📜 Game Instructions</h1>
+                                <ul className="text-start">
+                                    <li>You have <b>15 seconds</b> for each of the questions.</li>
+                                    <li>If you answer <b>correctly</b>, the next question appears automatically.</li>
+                                    <li>If you answer <b>wrongly</b> game over, the level restarts from <b>Question 1</b>.</li>
+                                    <li>The game tests your speed and accuracy. Good luck! 🎯</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            {/* <div className="dashboard-container text-center p-4">
-                <h2 className="fw-bold mb-4">Select a Subject</h2>
-                <div className="d-flex flex-wrap justify-content-center">
-                    {subjects.map((subject, index) => (
-                        <button
-                            key={index}
-                            className={`subject-card m-2 p-3 ${selectedSubject === subject ? "selected" : ""}`}
-                            onClick={() => setSelectedSubject(subject)}
-                        >
-                            {subject}
-                        </button>
-                    ))}
-                </div>
-
-                <h3 className="fw-bold mt-4">Select Difficulty</h3>
-                <div className="d-flex justify-content-center mt-2">
-                    {difficultyLevels.map((level, index) => (
-                        <button
-                            key={index}
-                            className={`difficulty-btn m-2 p-2 ${selectedDifficulty === level ? "selected" : ""}`}
-                            onClick={() => setSelectedDifficulty(level)}
-                        >
-                            {level}
-                        </button>
-                    ))}
-                </div>
-
-                <button className="start-btn mt-4 p-3" onClick={handleStartQuiz}>
-                    Start Quiz
-                </button>
-
-                <style>
-                    {`
-          .subject-card, .difficulty-btn {
-            border: none;
-            background: #30E3CA;
-            color: white;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-          }
-          .subject-card:hover, .difficulty-btn:hover, .selected {
-            background: #11999E;
-          }
-          .start-btn {
-            background: #25374D;
-            color: white;
-            font-size: 20px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-          }
-          .start-btn:hover {
-            opacity: 0.9;
-          }
-        `}
-                </style>
-            </div> */}
             <Footer />
 
         </div>

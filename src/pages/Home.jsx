@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-const navigate =useNavigate()
+  const navigate = useNavigate()
   const [isLoginTo, setIsLoginTo] = useState(false)
   useEffect(() => {
     if (sessionStorage.getItem('user')) {
@@ -15,24 +15,29 @@ const navigate =useNavigate()
     }
   }, [])
 
-  const handleSubject = async (lesson) => {
+  const handleSubject = async (sub, title) => {
+    const subjectInfo = {
+      difficulty:"easy",
+      subject: sub,
+      title
+    }
     if (!isLoginTo) {
       alert("Please Login")
     } else {
-      // setQuizData({ subject: lesson.id, difficulty: "easy" })
-      navigate('/game')
+      navigate('/game', { state: subjectInfo })
     }
   }
 
   const lessons = [
-    { id:'javascript', title: "JavaScript Basics", description: "Learn the fundamentals of JavaScript.", link: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/640px-Unofficial_JavaScript_logo_2.svg.png" },
-    {  id:'react',title: "React Fundamentals", description: "Understand the core concepts of React.", link: "https://miro.medium.com/v2/resize:fit:1400/0*y6IcBe5J1AdALzXw.png" },
-    {id:'css', title: "Advanced CSS", description: "Master flexbox, grid, and animations.", link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrmcw_0JrWn3MbaKxWcXeJLn-92hHBdLHIiQ&s" },
-    { id:'nodejs', title: "Node.js & Express", description: "Explore backend development with Node.js.", link: 'https://lh3.googleusercontent.com/csXm00pBuJvmhsXcI1XauxFGrE66sHBbWI9QyKY0lt2h55a1VaKl6F5TrlH0wBC_aijloKw9lh8a=e14-rj-sc0xffffff-w1270' },
-    {
-      id:'mongodb',title: "MongoDB Essentials", description: "Learn how to work with NoSQL databases.", link: "https://mma.prnewswire.com/media/384058/MongoDB_Logo.jpg?p=facebook"
-    },
-  ];
+    { id: 'javascript', title: "JavaScript Basics", description: "Learn the fundamentals of JavaScript.", link: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/640px-Unofficial_JavaScript_logo_2.svg.png" },
+    { id: 'react', title: "React Fundamentals", description: "Understand the core concepts of React.", link: "https://miro.medium.com/v2/resize:fit:1400/0*y6IcBe5J1AdALzXw.png" },
+    { id: 'python', title: "Python Programming", description: "Master Python for web development and data science.", link: "https://i0.wp.com/junilearning.com/wp-content/uploads/2020/06/python-programming-language.webp?fit=800%2C800&ssl=1" },
+    { id: 'nodejs', title: "Node.js & Express", description: "Explore backend development with Node.js.", link: 'https://lh3.googleusercontent.com/csXm00pBuJvmhsXcI1XauxFGrE66sHBbWI9QyKY0lt2h55a1VaKl6F5TrlH0wBC_aijloKw9lh8a=e14-rj-sc0xffffff-w1270' },
+    { id: 'sql', title: "SQL Essentials", description: "Learn how to work with relational databases.", link: "https://datacreative.com/wp-content/uploads/2023/08/datacreative-sql.webp"},
+    { id: 'nextjs', title: "Next.js Framework", description: "Build optimized and scalable React applications.", link: "https://images.ctfassets.net/c63hsprlvlya/IacLLeOBR5WCvdCPqKuff/6860b5cc464c4f54703a2befa3f706b4/nextjs3.webp" },
+    { id: 'django', title: "Django Framework", description: "Learn backend development with Python's Django framework.", link: "https://storage.caktusgroup.com/media/blog-images/django-logo.gif" },
+    { id: 'ubuntu', title: "Ubuntu Basics", description: "Learn the fundamentals of Ubuntu, Linux commands, and system administration.", link: "https://cdn.neowin.com/news/images/uploaded/2022/03/1647455145_new-ubuntu-logo_story.jpg" }
+];
   return (
     <>
       <div className='text-black min-vh-100'>
@@ -54,20 +59,23 @@ const navigate =useNavigate()
             </div>
           </div>
         </div>
-        <div className="container m-5 py-5 bg-white text-dark">
-          <h2 className="text-center mb-4 fw-bold">Start Learning</h2>
-          <div className="row gap-5">
+        <div className="container mt-5 bg-white text-dark">
+          <h2 className="text-center fw-bold">Start Learning</h2>
+
+          <div className="row my-5">
             {lessons.map((lesson, index) => (
-              <Card key={index} style={{ width: '18rem' }} >
-                <Card.Img variant="top" src={lesson.link} height={'230px'} />
-                <Card.Body>
-                  <Card.Title>{lesson.title}</Card.Title>
-                  <Card.Text>
-                    {lesson.description}
-                  </Card.Text>
-                  <Button onClick={() => handleSubject(lesson)} style={{backgroundColor:'#11999E'}}>Start Quizz</Button>
-                </Card.Body>
-              </Card>
+              <div className='col-lg-3 my-4' key={index}>
+                <Card style={{ width: '18rem' }} >
+                  <Card.Img variant="top" src={lesson.link} height={'230px'} />
+                  <Card.Body>
+                    <Card.Title>{lesson.title}</Card.Title>
+                    <Card.Text>
+                      {lesson.description}
+                    </Card.Text>
+                    <Button onClick={() => handleSubject(lesson.id, lesson.title)} style={{ backgroundColor: '#11999E' }}>Start Quizz</Button>
+                  </Card.Body>
+                </Card>
+              </div>
             ))}
           </div>
         </div>

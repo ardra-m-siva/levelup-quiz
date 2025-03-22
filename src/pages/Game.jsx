@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
 import { fetchQuestionsApi } from '../services/allApi';
 import { Spinner } from 'react-bootstrap';
@@ -7,14 +7,19 @@ import { Spinner } from 'react-bootstrap';
 const Game = () => {
     const navigate=useNavigate()
     const [currentLevel, setCurrentLevel] = useState(1)
-    const [progressData,setProgressData]=useState({questionNo:0,level:currentLevel})
+    const [progressData,setProgressData]=useState({questionNo:0,level:currentLevel,questions:""})
     const [questions, setQuestions] = useState([]); // Store fetched questions
     const [isLoaded, setIsLoaded] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false)
     const [selectedAnswer, setSelectedAnswer] = useState("")
     const [correctAnswer, setCorrectAnswer] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question
-    const didFetch=useRef(false)
+    const didFetch=useRef(false)    
+
+    const location = useLocation()
+    const { subject ,title , difficulty} = location.state
+
+
     useEffect(() => {
         if ( !didFetch.current) {
             didFetch.current = true;
@@ -24,17 +29,18 @@ const Game = () => {
 
     const fetchQuestions = async () => {
         try {
-            const response = await fetchQuestionsApi("easy", "html")
-            console.log(response.data);
+            const response = await fetchQuestionsApi(difficulty, subject)
             setQuestions(response.data);
+            setProgressData({...progressData,questions:response.data})
             setIsLoaded(true);
         } catch (error) {
             console.error("Error fetching questions:", error);
         }
     };
+
     const handleAnswer = async (selectedKey) => {
         const currentQuestion = questions[currentQuestionIndex]
-
+        // const correctAns= currentQuestion.correct_answer
         const correctAns = Object.entries(currentQuestion.correct_answers).filter(([key, value]) => value == "true").map(([key]) => key.replace("_correct", ""))
         setCorrectAnswer(correctAns)
         const isCorrectAnswer = correctAns.includes(selectedKey);
@@ -47,9 +53,7 @@ const Game = () => {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                     setCorrectAnswer("");
                     setProgressData({...progressData,questionNo:currentQuestionIndex+1})
-                    console.log("current index",currentQuestionIndex);
-                    
-                    
+                       
                 } else {
                     setCurrentLevel(currentLevel + 1)
                     // await fetchQuestions()
@@ -64,7 +68,6 @@ const Game = () => {
             // Reset answer state
             setSelectedAnswer("");
             setIsCorrect(false);
-            console.log("progressData",progressData);
 
         }, 1000);
     }
@@ -106,12 +109,12 @@ const Game = () => {
                     <div className='row mx-3 mt-3'>
                         {/* subject /game name  */}
                         <div className='col ms-4 fs-4'>
-                            Subject: <span>HTML</span>
+                            Subject: <span>{title ? title : (subject?subject: "General")}</span>
                         </div>
                         {/* difficulty level */}
                         <div className='col '>
                             <div className='text-center text-white' style={{ backgroundColor: '#11999E', padding: '8px' }}>
-                                Difficulty Level : <span>EASY</span>
+                                Difficulty Level : <span>{difficulty.toUpperCase()}</span>
                             </div>
                         </div>
                         {/* timer */}
@@ -148,7 +151,7 @@ const Game = () => {
                                             ))}
                                     </div>
                                 </>
-                            ) : <p className="text-center">No questions available</p>
+                            ) : <p className="text-center">No questions available</p> 
                         ) :
                             <div className="d-flex justify-content-center align-items-center m-5">
                                 <Spinner animation="border" variant="dark" />
