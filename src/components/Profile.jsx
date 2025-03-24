@@ -19,7 +19,6 @@ const Profile = () => {
   useEffect(() => {
     if (sessionStorage.getItem('user')) {
       const playerDetails = (JSON.parse(sessionStorage.getItem("user")))
-      
       setPlayer(playerDetails)
       setUpdateProfile({...updateProfile, username: playerDetails.username, email: playerDetails.email, password: playerDetails.password })
       setExistingProfilePic(playerDetails.profilePic)
@@ -30,8 +29,6 @@ const Profile = () => {
   useEffect(() => {
     if (updateProfile.profilePic) {
       setPreview(URL.createObjectURL(updateProfile.profilePic))
-      console.log("preview", preview);
-
     } else {
       setPreview("")
     }
@@ -40,7 +37,6 @@ const Profile = () => {
 
   const handleEdit = async () => {
     const { username, email, password, profilePic } = updateProfile
-    console.log(updateProfile);
 
     if (username && profilePic) {
       const reqBody = new FormData()
@@ -88,9 +84,7 @@ const Profile = () => {
                 <img src={preview ? preview : userProfileImg} alt="Profile picture" className="rounded-circle " style={{ width: "100px", height: "100px", border: '5px solid #2C3E50 ' }} />
                 :
                 <img className="rounded-circle " style={{ width: "100px", height: "100px", border: '5px solid #2C3E50 ' }} src={preview ? preview : `${serverUrl}/uploads/${existingProfilePic}`} alt="Profile picture" />
-
             }
-
           </div>
 
           {/* Profile Details */}

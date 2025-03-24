@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Modal, ProgressBar } from 'react-bootstrap';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Winlose from '../components/Winlose';
 
 const ProgressQuiz = () => {
     const [show, setShow] = useState(false);
-    const navigate = useNavigate()
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     useEffect(() => {

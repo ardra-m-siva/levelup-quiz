@@ -18,4 +18,11 @@ export const editProfileApi = (reqBody, reqHeader) => {
 export const fetchQuestionsApi = (difficulty,subject) => {
     return commonApi('GET',`${serverUrl}/api/questions?difficulty=${difficulty}&subject=${subject}`) 
 }
-    
+
+export const getStreakDetailsApi = (reqHeaders) => {
+    return commonApi('POST', `${serverUrl}/streak`, {},reqHeaders)
+}
+
+export const getStreaksApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/get-streak`, {},reqHeaders)
+}
