@@ -37,7 +37,7 @@ const ProgressQuiz = () => {
                     </div>
                     <div className='my-4 d-flex justify-content-evenly'>
                         <div>
-                            <p>Correct Answers: {isWin ? questionNo + 1 : questionNo}</p>
+                            <p>Correct Answer: {isWin ? questionNo + 1 : questionNo}</p>
                             <p>Total Questions: 10</p>
                             <p>Suggestion:</p>
                         </div>
@@ -50,7 +50,7 @@ const ProgressQuiz = () => {
                     <div className='d-flex justify-content-center my-5'><ProgressBar className='w-50' striped variant="success" now={(isWin ? questionNo + 1 : questionNo) * 10} /></div>
                     <div className='d-flex justify-content-evenly'>
                         <Link to={'/'} className='btn btn-danger'>Quit</Link>
-                        <Link to={'/dashboard'} className='btn btn-primary'>Restart</Link>
+                        <Link onClick={ ()=>sessionStorage.removeItem('claimedReward')} to={'/dashboard'} className='btn btn-primary'>Restart</Link>
                     </div>
                     <hr className='my-5' />
 

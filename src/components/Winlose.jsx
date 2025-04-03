@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import loseImg from '../assets/pageNotFound.png'
 import winImg from '../assets/happyGhost.png'
 import { addOnTimeApi, getHintApi, pauseTimeApi, skipGiftApi } from '../services/allApi';
@@ -12,6 +12,15 @@ const gifts = [
 const Winlose = ({ isWin }) => {
     const [rewardClaimed, setRewardClaimed] = useState(false);
     const [gift, setGift] = useState(null);
+
+
+    useEffect(() => {
+        const storedReward = sessionStorage.getItem('claimedReward');
+        if (storedReward) {
+            setGift(storedReward);
+            setRewardClaimed(true);
+        }
+    }, []);
 
     const handleClaimReward = async () => {
         const randomGift = gifts[Math.floor(Math.random() * gifts.length)];
@@ -27,6 +36,7 @@ const Winlose = ({ isWin }) => {
                 }
                let result= await randomGift.api(reqHeaders);
                console.log(result);
+               sessionStorage.setItem('claimedReward', randomGift.name);
                
             console.log(`Reward "${randomGift.name}" successfully saved to database!`);
             }
@@ -50,7 +60,7 @@ const Winlose = ({ isWin }) => {
                             </button>
                         )}
 
-                        {rewardClaimed && (
+                        {isWin && rewardClaimed && (
                             <div className="d-flex flex-column align-items-center mt-3 back-img" >
                                 <p className="text-success mt-3">🎉 You won: <strong>{gift}</strong>!</p>
                             </div>
