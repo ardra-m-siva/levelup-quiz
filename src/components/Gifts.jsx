@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { getAllGiftsApi } from '../services/allApi';
+import { getAllGiftsApi, removeAddTimeGiftsApi, removeHintGiftsApi, removePauseGiftsApi, removeSkipGiftsApi } from '../services/allApi';
 
-const Gifts = () => {
+const Gifts = ({increaseTimer}) => {
 
     const [gifts, setGifts] = useState({
-        extraTime: 0,  // Example: User has 2 extra time gifts
-        hints: 0,      // Example: 3 hints available
-        pause: 0,      // Example: 1 pause time
-        skip: 0        // Example: 2 skip question gifts
+        extraTime: 0,
+        hints: 0,
+        pause: 0,
+        skip: 0
     });
+    const [reqHeaders, setRequestHeaders] = useState({})
 
     useEffect(() => {
-        getAllGifts()
+        let token = sessionStorage.getItem('token')
+        const reqHeader = {
+            "Authorization": `Bearer ${token}`
+        }
+        setRequestHeaders(reqHeader)
+        getAllGifts(reqHeader)
     }, [])
 
-    const getAllGifts = async () => {
+    const getAllGifts = async (reqHeader) => {
         try {
-            let token = sessionStorage.getItem('token')
-            const reqHeaders = {
-                "Authorization": `Bearer ${token}`
-            }
-            const result = await getAllGiftsApi(reqHeaders)
+            const result = await getAllGiftsApi(reqHeader)
             console.log(result.data);
             setGifts({
-                ...gifts,
-                extraTime:result.data.addOnTime,
-                hints:result.data.hint,
-                pause:result.data.pauseTime,
-                skip:result.data.skipQuestion
+                extraTime: result.data.addOnTime,
+                hints: result.data.hint,
+                pause: result.data.pauseTime,
+                skip: result.data.skipQuestion
             })
         } catch (err) {
             console.log(err);
@@ -35,20 +36,69 @@ const Gifts = () => {
     }
 
     const handleAddOnTime = async () => {
+        if (gifts.extraTime > 0) {
+            try {
+                const result = await removeAddTimeGiftsApi(reqHeaders)
+                if (result.status == 200) {
+                    console.log("calling increase timer");
+                    increaseTimer(10);
+                    setTimeLeft((prevTime)=>prevTime+10)
+                    // handle the time
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            console.log("No extra time gifts available!");
+        }
 
     };
 
-    // hint
-    const handleHints = () => {
-        console.log("Hints if available time");
+
+    const handleHints = async () => {
+        if (gifts.hints > 0) {
+            try {
+                const result = await removeHintGiftsApi(reqHeaders)
+                if (result.status == 200) {
+                    // handle the hint
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            console.log("No hints gifts available!");
+        }
     };
 
-    const handlePauseTime = () => {
-        console.log("Paused time");
+    const handlePauseTime = async () => {
+        if (gifts.pause > 0) {
+
+            try {
+                const result = await removePauseGiftsApi(reqHeaders)
+                if (result.status == 200) {
+                    // handle the pause
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            console.log("No pause gifts available!");
+        }
     };
 
-    const handleSkipQuestion = () => {
-        console.log("Skipped question");
+    const handleSkipQuestion = async () => {
+        if (gifts.skip > 0) {
+            try {
+                const result = await removeSkipGiftsApi(reqHeaders)
+                if (result.status == 200) {
+                    // handle the skip
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            console.log("No skip gifts available!");
+        }
     };
 
     return (

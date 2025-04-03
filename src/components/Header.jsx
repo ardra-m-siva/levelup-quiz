@@ -30,6 +30,8 @@ const Header = () => {
                 <Link to={'/'} className='p-4 text-light fs-4 fw-bold' style={{ textDecoration: 'none' }}> LevelUp <i class="fa-solid fa-terminal"></i></Link>
                 {isLogin ?
                     <div className='d-flex align-items-center me-2'>
+                        <Link to={'/about'} className='btn border rounded text-white me-3 fw-bold'>About</Link>
+                        <Link to={'/contact'} className='btn border rounded text-white me-3 fw-bold'>Contact</Link>
                         {/* <Link to={'/dashboard'} className='btn border rounded text-white me-3 fw-bold' >Dasboard</Link> */}
                         {location.pathname !== "/dashboard" && (
                             <Link to={'/dashboard'} className='btn border rounded text-white me-3 fw-bold'>Dashboard</Link>

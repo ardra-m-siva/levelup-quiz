@@ -45,3 +45,17 @@ export const pauseTimeApi = (reqHeaders) => {
 export const getAllGiftsApi = (reqHeaders) => {
     return commonApi('GET', `${serverUrl}/all-gifts`, {},reqHeaders)
 }
+
+// remove gifts
+export const removeAddTimeGiftsApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/remove-addtime`, {},reqHeaders)
+}
+export const removeSkipGiftsApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/remove-skip`, {},reqHeaders)
+}
+export const removeHintGiftsApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/remove-hint`, {},reqHeaders)
+}
+export const removePauseGiftsApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/remove-pause`, {},reqHeaders)
+}

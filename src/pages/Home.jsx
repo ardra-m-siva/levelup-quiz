@@ -65,8 +65,8 @@ const Home = () => {
           <div className="row my-5">
             {lessons.map((lesson, index) => (
               <div className='col-lg-3 my-4' key={index}>
-                <Card style={{ width: '18rem' }} >
-                  <Card.Img variant="top" src={lesson.link} height={'230px'} />
+                <Card id='quiz-box' style={{ width: '18rem',height:'26rem' }} >
+                  <Card.Img variant="top" src={lesson.link} height={'220px'} />
                   <Card.Body>
                     <Card.Title>{lesson.title}</Card.Title>
                     <Card.Text>

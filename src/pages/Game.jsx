@@ -6,35 +6,42 @@ import { Spinner } from 'react-bootstrap';
 import Gifts from '../components/Gifts';
 
 const Game = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const [currentLevel, setCurrentLevel] = useState(1)
-    const [progressData,setProgressData]=useState({questionNo:0,level:currentLevel,questions:""})
+    const [progressData, setProgressData] = useState({ questionNo: 0, level: currentLevel, questions: "" })
     const [questions, setQuestions] = useState([]); // Store fetched questions
     const [isLoaded, setIsLoaded] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false)
     const [selectedAnswer, setSelectedAnswer] = useState("")
     const [correctAnswer, setCorrectAnswer] = useState([]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question
-    const didFetch=useRef(false)    
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(15);// Track current question
+    const didFetch = useRef(false)
 
     const location = useLocation()
-    const { subject ,title , difficulty} = location.state
-
+    const { subject, title, difficulty } = location.state
 
     useEffect(() => {
-        if ( !didFetch.current) {
+        setTimeLeft(15);  // Reset timer to initial value when the question changes
+    }, [currentQuestionIndex]);
+
+    useEffect(() => {
+        if (!didFetch.current) {
             didFetch.current = true;
             fetchQuestions();
         }
     }, []);
 
     const fetchQuestions = async () => {
+        console.log("inside fetchQuestions");
+        
         try {
             const response = await fetchQuestionsApi(difficulty, subject)
-            setQuestions(response.data);
             console.log(response.data);
-            
-            setProgressData({...progressData,questions:response.data})
+
+            setQuestions(response.data);
+
+            setProgressData({ ...progressData, questions: response.data })
             setIsLoaded(true);
         } catch (error) {
             console.error("Error fetching questions:", error);
@@ -55,16 +62,16 @@ const Game = () => {
                 if (currentQuestionIndex < questions.length - 1) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                     setCorrectAnswer("");
-                    setProgressData({...progressData,questionNo:currentQuestionIndex+1})
-                       
+                    setProgressData({ ...progressData, questionNo: currentQuestionIndex + 1 })
+
                 } else {
                     setCurrentLevel(currentLevel + 1)
                     // await fetchQuestions()
-                    navigate('/progress',{state:progressData})
+                    navigate('/progress', { state: progressData })
                     setCurrentQuestionIndex(0)
                 }
             } else {
-                navigate('/progress',{state:progressData})
+                navigate('/progress', { state: progressData })
                 // await fetchQuestions()
                 setCurrentQuestionIndex(0);
             }
@@ -77,10 +84,10 @@ const Game = () => {
 
     const handleTimeUp = () => {
         // Handle time-up scenario (e.g., navigate to progress page)
-        navigate('/progress' , {state:progressData}); 
+        navigate('/progress', { state: progressData });
         setCurrentQuestionIndex(0);
     };
-    
+
     return (
         <>
             <div className=' min-vh-100'>
@@ -112,7 +119,7 @@ const Game = () => {
                     <div className='row mx-3 mt-3'>
                         {/* subject /game name  */}
                         <div className='col ms-4 fs-4'>
-                            Subject: <span>{title ? title : (subject?subject: "General")}</span>
+                            Subject: <span>{title ? title : (subject ? subject : "General")}</span>
                         </div>
                         {/* difficulty level */}
                         <div className='col '>
@@ -122,7 +129,7 @@ const Game = () => {
                         </div>
                         {/* timer */}
                         <div className="col">
-                            <Timer start={isLoaded} handleTimeUp={handleTimeUp}  key={currentQuestionIndex} />
+                            <Timer start={isLoaded} handleTimeUp={handleTimeUp} timeLeft={timeLeft} setTimeLeft={setTimeLeft} key={currentQuestionIndex} />
                         </div>
                     </div>
                 </div>
@@ -144,8 +151,8 @@ const Game = () => {
                                                     className="btn btn-outline-dark d-block mx-auto my-3"
                                                     style={{
                                                         width: '90%',
-                                                        backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : (!isCorrect && correctAnswer.includes(key) ? "green" : "transparent"), 
-                                                        color: selectedAnswer === key || (!isCorrect && correctAnswer.includes(key))? "white" : "inherit",
+                                                        backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : (!isCorrect && correctAnswer.includes(key) ? "green" : "transparent"),
+                                                        color: selectedAnswer === key || (!isCorrect && correctAnswer.includes(key)) ? "white" : "inherit",
                                                         transition: "background 0.3s ease"
                                                     }}
                                                     disabled={selectedAnswer != ""} >
@@ -154,7 +161,7 @@ const Game = () => {
                                             ))}
                                     </div>
                                 </>
-                            ) : <p className="text-center">No questions available Please Restart Game</p> 
+                            ) : <p className="text-center">No questions available Please Restart Game</p>
                         ) :
                             <div className="d-flex justify-content-center align-items-center m-5">
                                 <Spinner animation="border" variant="dark" />
@@ -163,7 +170,7 @@ const Game = () => {
                 </div>
 
                 <div className='d-flex justify-content-center'>
-                    <Gifts/>
+                    <Gifts setTimeLeft={setTimeLeft} />
                 </div>
             </div>
         </>

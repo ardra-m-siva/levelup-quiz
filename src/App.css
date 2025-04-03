@@ -93,3 +93,7 @@ ul {
   background-image: url("https://i.gifer.com/6SSp.gif");
   width: 100%;
 }
+
+#quiz-box:hover{
+  transform: scale(1.03);
+}
