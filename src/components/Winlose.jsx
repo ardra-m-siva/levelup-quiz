@@ -30,12 +30,11 @@ const Winlose = ({ isWin }) => {
         try {
             if(sessionStorage.getItem('token')){
                 let token =sessionStorage.getItem('token')
-                console.log(token);
                 const reqHeaders={
                     "Authorization":`Bearer ${token}`
                 }
                let result= await randomGift.api(reqHeaders);
-               console.log(result);
+               console.log(result.data);
                sessionStorage.setItem('claimedReward', randomGift.name);
                
             console.log(`Reward "${randomGift.name}" successfully saved to database!`);

@@ -31,8 +31,6 @@ const Streak = () => {
                 }
                 await getStreakDetailsApi(reqHeaders)
                 const result = await getStreaksApi(reqHeaders)
-                console.log(result.data);
-
                 setCurrentStreak(result.data.currentStreak)
                 setLongestStreak(result.data.longestStreak)
                 highlightStreakDays(result.data.lastActiveDate, result.data.currentStreak);

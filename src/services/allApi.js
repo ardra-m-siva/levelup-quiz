@@ -40,3 +40,8 @@ export const getHintApi = (reqHeaders) => {
 export const pauseTimeApi = (reqHeaders) => {
     return commonApi('GET', `${serverUrl}/pause-time`, {},reqHeaders)
 }
+
+// get all gifts
+export const getAllGiftsApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/all-gifts`, {},reqHeaders)
+}

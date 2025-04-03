@@ -154,7 +154,7 @@ const Game = () => {
                                             ))}
                                     </div>
                                 </>
-                            ) : <p className="text-center">No questions available</p> 
+                            ) : <p className="text-center">No questions available Please Restart Game</p> 
                         ) :
                             <div className="d-flex justify-content-center align-items-center m-5">
                                 <Spinner animation="border" variant="dark" />
