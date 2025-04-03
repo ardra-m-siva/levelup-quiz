@@ -37,14 +37,14 @@ const Contact = () => {
                     <div className='my-5'>
                         <div className="row">
                             <div className="col my-5 p-5">
-                                <span className='fs-2 fw-bolder py-4' style={{ color: '#11999E' }}>LevelUp <i class="fa-solid fa-terminal"></i></span>
-                                <h4> Learning to code got simplified.</h4>
+                                <span className='fs-2 fw-bolder py-5' style={{ color: '#11999E' }}>LevelUp <i class="fa-solid fa-terminal"></i></span>
+                                <h4 className='mt-3'> Learning to code got simplified.</h4>
                                 <p> Learn the latest technology with interactive, hands-on courses. It’s free.</p>
-                                <ol>
-                                    <li >Bite-sized lessons staff actually apply in their roles</li>
-                                    <li>Interactive interface for fast, friction-free learning</li>
-                                    <li>Custom dashboard to see progress and acquired skills</li>
-                                </ol>
+                                <div>
+                                    <p >Bite-sized lessons staff actually apply in their roles</p>
+                                    <p>Interactive interface for fast, friction-free learning</p>
+                                    <p>Custom dashboard to see progress and acquired skills</p>
+                                </div>
                             </div>
                             <div className="col m-5">
                                 <form action="" className='border p-5 text-center'>

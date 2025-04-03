@@ -57,8 +57,8 @@ const Auth = ({ isLogin }) => {
   }
 
   return (
-    <div>
-      <div   style={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
+    <>
+      <div style={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
         <div className='p-3'>
           <Link to={'/'} className='btn'><i className="fa-solid fa-arrow-left fa-xl " ></i></Link>
         </div>
@@ -91,7 +91,7 @@ const Auth = ({ isLogin }) => {
                 <label htmlFor="floatingPassword">Password</label>
               </FloatingLabel>
               {/* submit button */}
-              <button onClick={handleSubmit} className="btn w-100 text-black" style={{ color: '#25374D', borderRadius: '40px', padding: '12px', fontSize: '20px', cursor: 'pointer', transition: '0.3s ease', boxShadow: '0px 4px 10px rgba(186, 215, 223, 0.4)',backgroundColor:'#EDEDED' }} onMouseEnter={(e) => (e.target.style.transform = 'scale(1.02)')} onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')} >
+              <button onClick={handleSubmit} className="btn w-100 text-black" style={{ color: '#25374D', borderRadius: '40px', padding: '12px', fontSize: '20px', cursor: 'pointer', transition: '0.3s ease', boxShadow: '0px 4px 10px rgba(186, 215, 223, 0.4)', backgroundColor: '#EDEDED' }} onMouseEnter={(e) => (e.target.style.transform = 'scale(1.02)')} onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')} >
                 {isLogin ? 'Login' : 'Register'} {loginedToSite && <Spinner animation="border" variant="dark" size='sm' />}
               </button>
 
@@ -102,7 +102,8 @@ const Auth = ({ isLogin }) => {
           </div>
         </div>
       </div>
-    </div>
+      
+    </>
   )
 }
 

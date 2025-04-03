@@ -54,7 +54,7 @@ const Dashboard = () => {
                                     <li>You have <b>15 seconds</b> for each of the questions.</li>
                                     <li>If you answer <b>correctly</b>, the next question appears automatically.</li>
                                     <li>If you answer <b>wrongly</b> game over, the level restarts from <b>Question 1</b>.</li>
-                                    <li>The game tests your speed and accuracy. Good luck! 🎯</li>
+                                    <li>The game tests your speed and accuracy. Good luck!</li>
                                 </ul>
                             </div>
                         </div>

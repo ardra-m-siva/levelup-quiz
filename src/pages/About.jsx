@@ -22,27 +22,7 @@ const About = () => {
                     </div>
                 </div>
 
-                <div className='container m-5'>
-                    <h2 className='text-center fw-bolder'>About Game Rules</h2>
-                    <h4 className='text-center'>Why employees learn tech skills more effectively</h4>
-                    <div className="row my-5 gap-3">
-                        <div className="col">
-                            <div className="p-2 my-5">
-                                <dl>
-                                    <dt className='fs-4'>Lessons in under 5 mins, Progress Tracking</dt>
-                                    <dd>Don't block your staff all day in training. Our 5-minute lessons can be done anytime, from anywhere, fitting perfectly into breaks, commutes, and other free time. Tracks daily challenges, achievements, and question-answer accuracy.</dd>
-                                </dl>
-                                <dl>
-                                    <dt className='fs-4'>Restart on Failure and Rewards & Achievements</dt>
-                                    <dd>If a player gets a question wrong, they restart from the beginning. Players earn points, rewards, and hints for progressing.</dd>
-                                </dl>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <img className='img-fluid' src="https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/04/np_file_153993.jpeg" alt="" />
-                        </div>
-                    </div>
-                </div>
+               
 
                 <div className='text-center my-5' >
                     <h2 className='fw-bolder'>Features</h2>
@@ -50,7 +30,7 @@ const About = () => {
                         <div className="col border p-2">
                             <img height={'300px'} width={'100%'} src="https://media.istockphoto.com/id/1365576235/vector/take-small-steps-to-achieve-big-goal-growing-wisely-slow-and-steady-to-reach-target-and.jpg?s=612x612&w=0&k=20&c=nCAD4XVLHMWZE2mA6tJjisjIx8x66zv2HS3b_KuGWL8=" alt="" />
                             <h5 className='my-3 fw-bold'> Bite-sized</h5>
-                            <p className='p-2'>Go step-by-step through our unique courses. Assess what you've learned with in-lesson quizzes, and gradually advance your skills with practice.</p>
+                            <p className='p-2'>Go step-by-step through our unique courses. Access what you've learned with in-lesson quizzes, and gradually advance your skills with practice.</p>
                         </div>
 
                         <div className="col border p-2">
@@ -67,6 +47,27 @@ const About = () => {
                     </div>
                 </div>
 
+                <div className='container m-5'>
+                    <h2 className='text-center fw-bolder mt-4'>About Game Rules</h2>
+                    <h5 className='text-center'>Why employees learn tech skills more effectively</h5>
+                    <div className="row my-5 gap-3">
+                        <div className="col">
+                            <div className="p-2 my-5">
+                                <div>
+                                    <h5 className='fs-4'>Lessons in under 5 mins, Progress Tracking</h5>
+                                    <p className='py-2' style={{textAlign:'justify'}}>Don't block your staff all day in training. Our 5-minute lessons can be done anytime, from anywhere, fitting perfectly into breaks, commutes, and other free time. Tracks daily challenges, achievements, and question-answer accuracy.</p>
+                                </div>
+                                <div>
+                                    <h5 className='fs-4'>Restart on Failure and Rewards & Achievements</h5>
+                                    <p className='py-2' style={{textAlign:'justify'}}>If a player gets a question wrong, they restart from the beginning. Players earn points, rewards, and hints for progressing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <img className='img-fluid' src="https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/04/np_file_153993.jpeg" alt="" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <Footer />
         </>
