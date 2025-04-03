@@ -32,7 +32,7 @@ const ProgressQuiz = () => {
                 {/* restart game & quit game */}
                 <div className='container'>
                     <div className='text-light py-2' style={{ backgroundColor: '#11999E' }}>
-                        <h2 className='text-center'>Level {level} Completed</h2>
+                        <h2 className='text-center'>{isWin? <span>Level {level} Completed</span> : <span>Level {level} Failed</span>}</h2>
                         <p className='text-center'>Quiz Information</p>
                     </div>
                     <div className='my-4 d-flex justify-content-evenly'>

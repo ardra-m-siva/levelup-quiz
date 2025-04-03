@@ -5,11 +5,11 @@ const Streak = () => {
 
     const [currentStreak, setCurrentStreak] = useState(0);
     const [longestStreak, setLongestStreak] = useState(0);
-    const [lastActiveDay,setLastActiveDay]=useState("")
-    const [streakDays, setStreakDays] = useState([]);
+    // const [lastActiveDay,setLastActiveDay]=useState("")
+    const [activeDays, setActiveDays] = useState([]);
 
     useEffect(() => {
-
+        getStreaks()
         let i = 0;
         const interval = setInterval(() => {
             if (i <= currentStreak) setCurrentStreak(i);
@@ -17,7 +17,6 @@ const Streak = () => {
             i++;
             if (i > longestStreak) clearInterval(interval);
         }, 100); // Animation for numbers
-        getStreaks()
     }, []);
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -36,28 +35,23 @@ const Streak = () => {
 
                 setCurrentStreak(result.data.currentStreak)
                 setLongestStreak(result.data.longestStreak)
-
-                // Convert lastActiveDate to a readable format
-                const lastActiveDate = new Date(result.data.lastActiveDate);
-                const formattedLastActive = lastActiveDate.toLocaleDateString('en-US', {
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                });
-                console.log(formattedLastActive);
-                // Assuming API returns an array of active streak days
-                if (result.data.streakDays) {
-                    setStreakDays(result.data.streakDays);
-                }
-
-                setLastActiveDay(formattedLastActive);
-                
+                highlightStreakDays(result.data.lastActiveDate, result.data.currentStreak);
             }
-
         } catch (err) {
             console.log(err);
 
         }
-        
     }
+
+    const highlightStreakDays = (lastActiveDate, streakCount) => {
+        const activeDaysArray = [];
+        let date = new Date(lastActiveDate);
+        for (let i = 0; i < streakCount; i++) {
+            activeDaysArray.push(date.getDay());
+            date.setDate(date.getDate() - 1);
+        }
+        setActiveDays(activeDaysArray);
+    };
     return (
         <div>
             <div style={{ background: "linear-gradient(135deg,rgb(27, 43, 53),rgb(77, 99, 123))", width: '100%' }} className="text-center rounded p-4" >
@@ -76,7 +70,7 @@ const Streak = () => {
                     {/* Streak Bar */}
                     <div className="col d-flex flex-wrap justify-content-center gap-3">
                         {days.map((day, index) => (
-                            <div key={index} className={`streak-dot ${index < 5 ? "active" : ""}`} >
+                            <div key={index} className={`streak-dot ${activeDays.includes(index) ? "active" : ""}`} >
                                 {day}
                             </div>
                         ))}

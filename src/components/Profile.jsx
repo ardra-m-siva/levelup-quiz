@@ -4,6 +4,7 @@ import userProfileImg from '../assets/userProfile.jpg'
 import profileUpload from '../assets/uploadProfile.png'
 import { editProfileApi } from '../services/allApi'
 import serverUrl from '../services/serverUrl'
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const [updateProfile, setUpdateProfile] = useState({
@@ -20,7 +21,7 @@ const Profile = () => {
     if (sessionStorage.getItem('user')) {
       const playerDetails = (JSON.parse(sessionStorage.getItem("user")))
       setPlayer(playerDetails)
-      setUpdateProfile({...updateProfile, username: playerDetails.username, email: playerDetails.email, password: playerDetails.password })
+      setUpdateProfile({ ...updateProfile, username: playerDetails.username, email: playerDetails.email, password: playerDetails.password })
       setExistingProfilePic(playerDetails.profilePic)
       setPreview("")
     }
@@ -70,13 +71,12 @@ const Profile = () => {
   }
   return (
     <>
-      <div className="d-flex flex-column align-items-center text-dark">
-        <div className="w-100 " style={{ height: "100px" }}>
-          <h2 className='text-center text-dark fs-6 mt-3 px-3'>{player.username?.split(" ")[0]}</h2>
-
+      <div className="d-flex flex-column align-items-center text-dark ">
+        <div className="w-100 rounded" style={{ height: "100px", backgroundColor: '#BFEAF5' }}>
+          <h2 className='text-center fs-5 mt-3 px-3 text-dark' >{player.username?.split(" ")[0]}</h2>
         </div>
         {/* profile */}
-        <div className="position-relative mt-5 text-center p-4 rounded shadow-lg" style={{ maxWidth: "400px", width: "90%" }}>
+        <div className="position-relative mt-5 mb-4 text-center p-4 rounded shadow-lg" style={{ maxWidth: "400px", width: "90%" }}>
           <div className="position-absolute  start-50 translate-middle" style={{ top: "-50px" }}>
             {/* profile image is here */}
             {
@@ -99,13 +99,16 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <div className='text-dark rounded text-center ' >
+        <Link to={'/history'} className='btn btn-secondary my-3 w-75 py-2'><h6>Track Progress <i class="fa-solid fa-chart-simple"></i></h6></Link>
+      </div>
       <Modal centered show={show} onHide={handleClose} backdrop="static" keyboard={false} style={{
         backgroundColor: "rgba(0, 0, 0, 0.5)", // Modal backdrop color
       }}>
         <Modal.Header closeButton style={{ backgroundColor: "#11999E", color: "white", borderBottom: "none" }}>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
-        <Modal.Body  style={{ color: "#40514E", fontSize: "18px" }}>
+        <Modal.Body style={{ color: "#40514E", fontSize: "18px" }}>
           <div className='d-flex justify-content-between align-items-center'>
             <label htmlFor='inputImg'>
               {/* image upload here */}

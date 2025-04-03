@@ -10,7 +10,7 @@ const Header = () => {
     const [isLogin, setIsLogin] = useState(false)
     const [show, setShow] = useState(false);
     const [updatedProfileImg, setUpdatedProfileImg] = useState("")
-    const location=useLocation()
+    const location = useLocation()
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
@@ -38,7 +38,7 @@ const Header = () => {
                             <Link to={'/'} className='btn border rounded text-white me-3 fw-bold'>Home</Link>
                         )}
                         <Button onClick={handleShow} aria-controls="example-collapse-text" aria-expanded={open} variant="link" >
-                            <img src={updatedProfileImg ? `${serverUrl}/uploads/${updatedProfileImg}` : userProfileImg} alt="Profile" width={'50px'} className='rounded-circle' style={{ cursor: 'pointer' ,border:'3px solid white'}} />
+                            <img src={updatedProfileImg ? `${serverUrl}/uploads/${updatedProfileImg}` : userProfileImg} alt="Profile" width={'50px'} className='rounded-circle' style={{ cursor: 'pointer', border: '3px solid white' }} />
                         </Button>
                         <Offcanvas show={show} onHide={handleClose} placement='end' className="text-white">
                             <Offcanvas.Header closeButton style={{ backgroundColor: "#11999E" }}>

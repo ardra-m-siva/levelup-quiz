@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Game from './pages/Game';
 import Dashboard from './pages/Dashboard';
 import ProgressQuiz from './pages/ProgressQuiz';
+import { ProgressHistory } from './pages/ProgressHistory';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path={'/dashboard'} element={<Dashboard/>} />
           <Route path={'/game'} element={<Game/>} />
           <Route path={'/progress'} element={<ProgressQuiz/>}/>
+          <Route path={'/history'} element={<ProgressHistory/>}/>
         </Routes>
     </>
   )

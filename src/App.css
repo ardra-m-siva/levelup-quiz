@@ -43,8 +43,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
   padding: 15px;
   border-radius: 50%;
   background-color: #2C3E50;
@@ -53,14 +53,11 @@
   border: 2px solid #11999e;
   transition: all 0.3s ease-in-out;
   font-size: 14px;
-
-
 }
 
 .active {
-
   background-color: #11999E;
-  transform: scale(1.2);
+  transform: scale(1.1);
   animation: pop 0.5s ease-in-out;
   box-shadow: "0px 0px 12px #4CAF50"
 }
@@ -90,4 +87,8 @@ ul {
 
 .item:hover:hover {
   text-decoration: underline;
+}
+
+.back-img{
+  background-image: url("https://i.gifer.com/6SSp.gif");
 }

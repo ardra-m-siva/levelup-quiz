@@ -26,3 +26,17 @@ export const getStreakDetailsApi = (reqHeaders) => {
 export const getStreaksApi = (reqHeaders) => {
     return commonApi('GET', `${serverUrl}/get-streak`, {},reqHeaders)
 }
+
+// add gifts
+export const addOnTimeApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/addtime-gift`, {},reqHeaders)
+}
+export const skipGiftApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/skip-gift`, {},reqHeaders)
+}
+export const getHintApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/hint`, {},reqHeaders)
+}
+export const pauseTimeApi = (reqHeaders) => {
+    return commonApi('GET', `${serverUrl}/pause-time`, {},reqHeaders)
+}

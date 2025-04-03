@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
 import { fetchQuestionsApi } from '../services/allApi';
 import { Spinner } from 'react-bootstrap';
+import Gifts from '../components/Gifts';
 
 const Game = () => {
     const navigate=useNavigate()
@@ -31,6 +32,8 @@ const Game = () => {
         try {
             const response = await fetchQuestionsApi(difficulty, subject)
             setQuestions(response.data);
+            console.log(response.data);
+            
             setProgressData({...progressData,questions:response.data})
             setIsLoaded(true);
         } catch (error) {
@@ -160,13 +163,7 @@ const Game = () => {
                 </div>
 
                 <div className='d-flex justify-content-center'>
-                    <div className='position-fixed bottom-0 w-50 d-flex align-items-center justify-content-evenly text-white' style={{ height: '50px', backgroundColor: '#11999E', zIndex: 20, padding: "10px 0" }}>
-                        {/* total hints logo */}
-                       <button className='btn text-white'><i className="fa-regular fa-clock fa-xl"></i></button>
-                        <button className='btn text-white'><i className="fa-solid fa-clock-rotate-left fa-xl"></i></button>
-                        <button className='btn text-white'><i className="fa-solid fa-circle-pause fa-xl"></i></button>
-                        <button className='btn text-white'><i className="fa-solid fa-forward fa-xl"></i></button>
-                    </div>
+                    <Gifts/>
                 </div>
             </div>
         </>
