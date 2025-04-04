@@ -6,18 +6,21 @@ import { Spinner } from 'react-bootstrap';
 import Gifts from '../components/Gifts';
 
 const Game = () => {
-    const navigate = useNavigate()
     const [currentLevel, setCurrentLevel] = useState(1)
-    const [progressData, setProgressData] = useState({ questionNo: 0, level: currentLevel, questions: "" })
+    const [progressData, setProgressData] = useState({ questionNo: 0, level: currentLevel, questions: "" ,topic:"" })
     const [questions, setQuestions] = useState([]); // Store fetched questions
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);  // true if the questions loaded
     const [isCorrect, setIsCorrect] = useState(false)
     const [selectedAnswer, setSelectedAnswer] = useState("")
     const [correctAnswer, setCorrectAnswer] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(15);// Track current question
-    const didFetch = useRef(false)
+    const [timeLeft, setTimeLeft] = useState(15);
+    // for hints in the gifts
+    const [hint, setHint] = useState("")
+    const [hintClicked, setHintClicked] = useState(false);
 
+    const navigate = useNavigate()
+    const didFetch = useRef(false)
     const location = useLocation()
     const { subject, title, difficulty } = location.state
 
@@ -34,13 +37,13 @@ const Game = () => {
 
     const fetchQuestions = async () => {
         console.log("inside fetchQuestions");
-        
+
+        setProgressData({...progressData,topic:subject})
         try {
             const response = await fetchQuestionsApi(difficulty, subject)
             console.log(response.data);
 
             setQuestions(response.data);
-
             setProgressData({ ...progressData, questions: response.data })
             setIsLoaded(true);
         } catch (error) {
@@ -49,8 +52,8 @@ const Game = () => {
     };
 
     const handleAnswer = async (selectedKey) => {
+        setHint("")
         const currentQuestion = questions[currentQuestionIndex]
-        // const correctAns= currentQuestion.correct_answer
         const correctAns = Object.entries(currentQuestion.correct_answers).filter(([key, value]) => value == "true").map(([key]) => key.replace("_correct", ""))
         setCorrectAnswer(correctAns)
         const isCorrectAnswer = correctAns.includes(selectedKey);
@@ -66,13 +69,11 @@ const Game = () => {
 
                 } else {
                     setCurrentLevel(currentLevel + 1)
-                    // await fetchQuestions()
                     navigate('/progress', { state: progressData })
                     setCurrentQuestionIndex(0)
                 }
             } else {
                 navigate('/progress', { state: progressData })
-                // await fetchQuestions()
                 setCurrentQuestionIndex(0);
             }
             // Reset answer state
@@ -83,14 +84,27 @@ const Game = () => {
     }
 
     const handleTimeUp = () => {
-        // Handle time-up scenario (e.g., navigate to progress page)
         navigate('/progress', { state: progressData });
         setCurrentQuestionIndex(0);
     };
 
+    const handleNavigation = () => {
+        navigate('/progress', { state: progressData })
+    }
+
+    const handleTheHints = () => {
+        setHintClicked(true)
+        const currentHint = questions[currentQuestionIndex].tip;
+        if (currentHint && currentHint.trim() !== "") {
+            setHint(currentHint);
+        } else {
+            setHint(""); // no hint
+        }
+    }
+
     return (
         <>
-            <div className=' min-vh-100'>
+            <div className=' min-vh-100' style={{paddingBottom: '80px'}}>
                 <nav style={{ borderRadius: '0px 0px 300px 300px', backgroundColor: '#09585b' }} className='text-dark'>
                     {/* back button */}
                     <div className='p-2 d-flex justify-content-between'>
@@ -141,24 +155,26 @@ const Game = () => {
                                 <>
                                     <h4 className='m-4'>Q. {questions[currentQuestionIndex].question}</h4>
                                     {/* Answer choices */}
-                                    <div style={{ width: '100%' }} className="my-4 ">
-                                        {Object.entries(questions[currentQuestionIndex].answers)
-                                            .filter(([key, value]) => value) //removes null values
-                                            .map(([key, value]) => (
-                                                <button
-                                                    key={key}
-                                                    onClick={() => handleAnswer(key)}
-                                                    className="btn btn-outline-dark d-block mx-auto my-3"
-                                                    style={{
-                                                        width: '90%',
-                                                        backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : (!isCorrect && correctAnswer.includes(key) ? "green" : "transparent"),
-                                                        color: selectedAnswer === key || (!isCorrect && correctAnswer.includes(key)) ? "white" : "inherit",
-                                                        transition: "background 0.3s ease"
-                                                    }}
-                                                    disabled={selectedAnswer != ""} >
-                                                    {value}
-                                                </button>
-                                            ))}
+                                    <div className='row'>
+                                        <div style={{ width: '80%' }} className="my-4 col">
+                                            {Object.entries(questions[currentQuestionIndex].answers)
+                                                .filter(([key, value]) => value) //removes null values
+                                                .map(([key, value]) => (
+                                                    <button
+                                                        key={key}
+                                                        onClick={() => handleAnswer(key)}
+                                                        className="btn btn-outline-dark d-block mx-auto my-3"
+                                                        style={{
+                                                            width: '90%',
+                                                            backgroundColor: selectedAnswer === key ? (isCorrect ? "green" : "red") : (!isCorrect && correctAnswer.includes(key) ? "green" : "transparent"),
+                                                            color: selectedAnswer === key || (!isCorrect && correctAnswer.includes(key)) ? "white" : "inherit",
+                                                            transition: "background 0.3s ease"
+                                                        }}
+                                                        disabled={selectedAnswer != ""} >
+                                                        {value}
+                                                    </button>
+                                                ))}
+                                        </div>
                                     </div>
                                 </>
                             ) : <p className="text-center">No questions available Please Restart Game</p>
@@ -169,8 +185,18 @@ const Game = () => {
                     }
                 </div>
 
+                {hintClicked && (
+                    <div className='my-4 text-center'>
+                        {hint ? (
+                            <h5>Tip: <span className='text-success'>{hint}</span></h5>
+                        ) : (
+                            <h5 className='text-danger'>Tip is not present. Better luck next time!</h5>
+                        )}
+                    </div>
+                )}
+
                 <div className='d-flex justify-content-center'>
-                    <Gifts setTimeLeft={setTimeLeft} />
+                    <Gifts setTimeLeft={setTimeLeft} setCurrentQuestionIndex={setCurrentQuestionIndex} handleNavigation={handleNavigation} handleTheHints={handleTheHints} />
                 </div>
             </div>
         </>

@@ -5,7 +5,7 @@ const Footer = () => {
         <div className='text-white fw-semibold p-5' style={{ backgroundColor: '#11999E' }}>
             <div className="row">
                 <div className="col-lg-4">
-                    <h2 className='bold'>LevelUp <i class="fa-solid fa-terminal"></i></h2>
+                    <h2 className='bold'>LevelUp <i className="fa-solid fa-terminal"></i></h2>
                     <p>Designed and built with all the love in the world by the Bootstrap team with the help of our contributors.</p>
                     <p>Code licensed MIT, docs CC BY 3.0.</p>
                     <p>Currently v5.3.3.</p>

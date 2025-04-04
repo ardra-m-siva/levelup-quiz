@@ -53,7 +53,6 @@ const Streak = () => {
     return (
         <div>
             <div style={{ background: "linear-gradient(135deg,rgb(27, 43, 53),rgb(78, 99, 122))", width: '100%' }} className="text-center rounded p-4" >
-                {/* style={{backgroundColor:'#40514e'}} className="text-center rounded p-2" */}
                 <h2 className="fw-bold text-light mb-3">
                     Streaks <span className="text-warning">🔥</span>
                 </h2>

@@ -27,7 +27,7 @@ const Header = () => {
     return (
         <>
             <div className='container d-flex justify-content-between flew-wrap' style={{ background: '#11999E' }}>
-                <Link to={'/'} className='p-4 text-light fs-4 fw-bold' style={{ textDecoration: 'none' }}> LevelUp <i class="fa-solid fa-terminal"></i></Link>
+                <Link to={'/'} className='p-4 text-light fs-4 fw-bold' style={{ textDecoration: 'none' }}> LevelUp <i className="fa-solid fa-terminal"></i></Link>
                 {isLogin ?
                     <div className='d-flex align-items-center me-2'>
                         <Link to={'/about'} className='btn border rounded text-white me-3 fw-bold'>About</Link>

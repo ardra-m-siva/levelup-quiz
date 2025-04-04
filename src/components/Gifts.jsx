@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getAllGiftsApi, removeAddTimeGiftsApi, removeHintGiftsApi, removePauseGiftsApi, removeSkipGiftsApi } from '../services/allApi';
 
-const Gifts = ({increaseTimer}) => {
+const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleTheHints }) => {
+    const [reqHeaders, setRequestHeaders] = useState({})
 
     const [gifts, setGifts] = useState({
         extraTime: 0,
@@ -9,7 +10,6 @@ const Gifts = ({increaseTimer}) => {
         pause: 0,
         skip: 0
     });
-    const [reqHeaders, setRequestHeaders] = useState({})
 
     useEffect(() => {
         let token = sessionStorage.getItem('token')
@@ -39,11 +39,12 @@ const Gifts = ({increaseTimer}) => {
         if (gifts.extraTime > 0) {
             try {
                 const result = await removeAddTimeGiftsApi(reqHeaders)
+                console.log(result.data);
                 if (result.status == 200) {
-                    console.log("calling increase timer");
-                    increaseTimer(10);
-                    setTimeLeft((prevTime)=>prevTime+10)
-                    // handle the time
+                    getAllGifts(reqHeaders)
+                    setTimeLeft(prevTime => {
+                        return prevTime + 10;
+                    })
                 }
             } catch (err) {
                 console.log(err);
@@ -51,7 +52,6 @@ const Gifts = ({increaseTimer}) => {
         } else {
             console.log("No extra time gifts available!");
         }
-
     };
 
 
@@ -61,6 +61,8 @@ const Gifts = ({increaseTimer}) => {
                 const result = await removeHintGiftsApi(reqHeaders)
                 if (result.status == 200) {
                     // handle the hint
+                    getAllGifts(reqHeaders)
+                    handleTheHints()
                 }
             } catch (err) {
                 console.log(err);
@@ -77,6 +79,8 @@ const Gifts = ({increaseTimer}) => {
                 const result = await removePauseGiftsApi(reqHeaders)
                 if (result.status == 200) {
                     // handle the pause
+                    getAllGifts(reqHeaders)
+
                 }
             } catch (err) {
                 console.log(err);
@@ -92,6 +96,14 @@ const Gifts = ({increaseTimer}) => {
                 const result = await removeSkipGiftsApi(reqHeaders)
                 if (result.status == 200) {
                     // handle the skip
+                    getAllGifts(reqHeaders)
+                    setCurrentQuestionIndex(prevQuestion => {
+                        if (prevQuestion == 9) {
+                            handleNavigation()
+                        } else {
+                            return prevQuestion + 1;
+                        }
+                    })
                 }
             } catch (err) {
                 console.log(err);
@@ -103,7 +115,7 @@ const Gifts = ({increaseTimer}) => {
 
     return (
         <>
-            <div className='position-fixed bottom-0 w-50 d-flex align-items-center justify-content-evenly text-white' style={{ height: '60px', backgroundColor: '#11999E', zIndex: 20, padding: "10px 0" }}>
+            <div className='position-fixed bottom-0 mt-auto w-50 d-flex align-items-center justify-content-evenly text-white' style={{ height: '60px', backgroundColor: '#11999E', zIndex: 20, padding: "10px 0" }}>
                 {/* total hints logo */}
                 <button onClick={handleAddOnTime} className='btn text-white position-relative'>
                     <i className="fa-regular fa-clock fa-xl"></i>

@@ -37,7 +37,7 @@ const Contact = () => {
                     <div className='my-5'>
                         <div className="row">
                             <div className="col my-5 p-5">
-                                <span className='fs-2 fw-bolder py-5' style={{ color: '#11999E' }}>LevelUp <i class="fa-solid fa-terminal"></i></span>
+                                <span className='fs-2 fw-bolder py-5' style={{ color: '#11999E' }}>LevelUp <i className="fa-solid fa-terminal"></i></span>
                                 <h4 className='mt-3'> Learning to code got simplified.</h4>
                                 <p> Learn the latest technology with interactive, hands-on courses. It’s free.</p>
                                 <div>

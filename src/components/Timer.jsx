@@ -1,18 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 const Timer = ({ start, handleTimeUp, timeLeft, setTimeLeft }) => {
+    const intervalRef = useRef(null);
     useEffect(() => {
-        if (!start || timeLeft <= 0) {
-            if (timeLeft === 0) handleTimeUp();
-            return;
+        if (start) {
+            // Clear existing interval, just to be safe
+            clearInterval(intervalRef.current);
+
+            intervalRef.current = setInterval(() => {
+                setTimeLeft(prev => {
+                    if (prev <= 1) {
+                        clearInterval(intervalRef.current);
+                        handleTimeUp();
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
         }
-        const timer = setInterval(() => {
-            setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-        }, 1000)
-
-        return () => clearInterval(timer)
-
-    }, [start, timeLeft, handleTimeUp])
+        return () => clearInterval(intervalRef.current);
+    }, [start,setTimeLeft]);
+    
     return (
         <div className='d-flex justify-content-end align-items-center me-4'>
             <div className='border border-black rounded p-2 shagow-lg text-center' style={{ minWidth: "100px" }}>

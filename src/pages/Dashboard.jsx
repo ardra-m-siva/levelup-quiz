@@ -47,7 +47,7 @@ const Dashboard = () => {
                                 <button onClick={handleSubjectSelection} className='btn m-3 text-light' style={{backgroundColor:'#11999E'}}>Start</button>
                             </div>
                         </div>
-                        <div className="col-lg-6 d-flex justify-content-center align-items-center text-black">
+                        <div className="col-lg-6 d-flex justify-content-center align-items-center text-black my-5">
                             <div className="border rounded p-4 text-center" style={{ width: '86%' }}>
                                 <h1 className="mb-3">📜 Game Instructions</h1>
                                 <ul className="text-start">

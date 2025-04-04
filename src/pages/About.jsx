@@ -7,8 +7,7 @@ const About = () => {
         <>
             <Header />
             <div className='container'>
-                <h1 className='text-center my-5 fw-bolder'>The perfect platform to boost
-                    <br /> your technical skills</h1>
+                <h1 className='text-center my-5 fw-bolder'>The perfect platform to boost <br />  your technical skills</h1>
                 <div className="row gap-4 text-center m-5">
                     <div className="col-lg p-5">
                         <img className='img-fluid' src="https://img.freepik.com/free-photo/young-woman-attend-courses-girl-student-studying-holding-notebooks-showing-thumb-up-approval-recommending-company-standing-blue-background_1258-70145.jpg?semt=ais_hybrid" alt="" height={'440px'} />

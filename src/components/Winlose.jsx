@@ -55,7 +55,7 @@ const Winlose = ({ isWin }) => {
                         <p>{isWin ? "Congratulations" : "Better Luck Next Time"}</p>
                         {isWin && !rewardClaimed && (
                             <button onClick={handleClaimReward} className='btn  mt-3'>
-                                <span ><img width={'130px'} src="https://assets-v2.lottiefiles.com/a/e53c307c-eb5e-11ef-8459-332c6d8a4e78/g8g1PBKIJY.gif" alt="" /></span><br /> Claim Your Reward
+                                <span ><img width={'130px'} src="https://assets-v2.lottiefiles.com/a/e53c307c-eb5e-11ef-8459-332c6d8a4e78/g8g1PBKIJY.gif" alt="" /></span> <br /> Claim Your Reward
                             </button>
                         )}
 
