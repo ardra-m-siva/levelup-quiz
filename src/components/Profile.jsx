@@ -4,7 +4,6 @@ import userProfileImg from '../assets/userProfile.jpg'
 import profileUpload from '../assets/uploadProfile.png'
 import { editProfileApi } from '../services/allApi'
 import serverUrl from '../services/serverUrl'
-import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const [updateProfile, setUpdateProfile] = useState({
@@ -98,9 +97,6 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className='text-dark rounded text-center ' >
-        <Link to={'/history'} className='btn btn-secondary my-3 w-75 py-2'><h6>Track Progress <i className="fa-solid fa-chart-simple"></i></h6></Link>
       </div>
       <Modal centered show={show} onHide={handleClose} backdrop="static" keyboard={false} style={{
         backgroundColor: "rgba(0, 0, 0, 0.5)", // Modal backdrop color

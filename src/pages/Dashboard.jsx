@@ -5,10 +5,10 @@ import Header from '../components/Header'
 import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const [subjectInfo, setSubjectInfo] = useState({ subject: "", title: "", difficulty: "easy" })
     function handleSubjectSelection() {
-        navigate('/game',{state:subjectInfo})
+        navigate('/game', { state: subjectInfo })
     }
 
     return (
@@ -19,37 +19,30 @@ const Dashboard = () => {
                     <Streak />
                 </div>
                 <div className='container'>
-                    <div className='row ' >
-                        <div className='col-lg-6 d-flex justify-content-center align-items-center text-black'>
-                            <div className='border rounded m-4 p-4 text-center ' style={{ width: '86%' }}>
-                                <h3>Start Learning</h3>
-                                <select value={subjectInfo.subject} onChange={e => setSubjectInfo({ ...subjectInfo, subject: e.target.value })} name="subject" id="" className='form-control my-3 w-100' >
+                    <div className='row g-4 align-items-center' >
+                        <div className='col-lg-6 d-flex flex-column justify-content-center align-items-center text-black'>
+                            <div className='border rounded m-4 p-4 text-center w-100' >
+                                <h3 className="fw-bold">Start Learning</h3>
+                                <select value={subjectInfo.subject} onChange={e => setSubjectInfo({ ...subjectInfo, subject: e.target.value })} name="subject" id="" className='form-select my-3' >
                                     <option value="" disabled selected >Select Subject</option>
-                                    <option value="linux">Linux</option>
-                                    <option value="bash">Bash</option>
-                                    <option value="docker">Docker</option>
-                                    <option value="react">React</option>
-                                    <option value="nodejs">NodeJs</option>
-                                    <option value="Next.Js">NextJs</option>
-                                    <option value="vuejs">VueJs</option>
-                                    <option value="mysql">MySQL</option>
-                                    <option value="html">HTML</option>
-                                    <option value="javascript">JavaScript</option>
-                                    <option value="python">Python</option>
-                                    <option value="django">Django</option>
+                                    {[  "Linux", "Bash", "Docker", "React", "NodeJs", "Next.Js", "VueJs", "MySQL", "HTML", "JavaScript", "Python", "Django" ].map((subject, index) => (
+                                        <option key={index} value={subject.toLowerCase()}>
+                                            {subject}
+                                        </option>
+                                    ))}
                                 </select>
-                                <select onChange={e => setSubjectInfo({ ...subjectInfo, difficulty: e.target.value })} name="difficulty" id="" className='form-control my-3 w-100 '>
+                                <select onChange={e => setSubjectInfo({ ...subjectInfo, difficulty: e.target.value })} name="difficulty" id="" className='form-select my-3 '>
                                     <option value="" selected disabled>Select Difficulty</option>
                                     <option value="easy">Easy</option>
                                     <option value="medium">Medium</option>
                                     <option value="hard">Hard</option>
                                 </select>
-                                <button onClick={handleSubjectSelection} className='btn m-3 text-light' style={{backgroundColor:'#11999E'}}>Start</button>
+                                <button onClick={handleSubjectSelection} className='btn w-100 text-light fw-bold' style={{ backgroundColor: '#11999E' }}>Start</button>
                             </div>
                         </div>
-                        <div className="col-lg-6 d-flex justify-content-center align-items-center text-black my-5">
-                            <div className="border rounded p-4 text-center" style={{ width: '86%' }}>
-                                <h1 className="mb-3">📜 Game Instructions</h1>
+                        <div className="col-lg-6 d-flex justify-content-center align-items-center text-black">
+                            <div className="border rounded p-4 text-center w-100">
+                                <h1 className="fw-bold mb-3">📜 Game Instructions</h1>
                                 <ul className="text-start">
                                     <li>You have <b>15 seconds</b> for each of the questions.</li>
                                     <li>If you answer <b>correctly</b>, the next question appears automatically.</li>

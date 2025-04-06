@@ -26,20 +26,20 @@ const Header = () => {
 
     return (
         <>
-            <div className='container d-flex justify-content-between flew-wrap' style={{ background: '#11999E' }}>
-                <Link to={'/'} className='p-4 text-light fs-4 fw-bold' style={{ textDecoration: 'none' }}> LevelUp <i className="fa-solid fa-terminal"></i></Link>
+            <div className='container d-flex justify-content-between flex-wrap' style={{ background: '#11999E' }}>
+                <Link to={'/'} className='p-4 text-light fs-4 fw-bold text-decoration-none'> LevelUp <i className="fa-solid fa-terminal"></i></Link>
                 {isLogin ?
-                    <div className='d-flex align-items-center me-2'>
-                        <Link to={'/about'} className='btn border rounded text-white me-3 fw-bold'>About</Link>
-                        <Link to={'/contact'} className='btn border rounded text-white me-3 fw-bold'>Contact</Link>
-                        {/* <Link to={'/dashboard'} className='btn border rounded text-white me-3 fw-bold' >Dasboard</Link> */}
+                    <div className='d-flex flex-wrap align-items-center justify-content-end gap-1'>
+                        <Link to={'/about'} className='btn btn-outline-light me-3 fw-bold'>About</Link>
+                        <Link to={'/contact'} className='btn btn-outline-light me-3 fw-bold'>Contact</Link>
+                        {/* <Link to={'/dashboard'} className='btn btn-outline-light me-3 fw-bold' >Dasboard</Link> */}
                         {location.pathname !== "/dashboard" && (
-                            <Link to={'/dashboard'} className='btn border rounded text-white me-3 fw-bold'>Dashboard</Link>
+                            <Link to={'/dashboard'} className='btn btn-outline-light me-3 fw-bold'>Dashboard</Link>
                         )}
                         {location.pathname !== "/" && (
-                            <Link to={'/'} className='btn border rounded text-white me-3 fw-bold'>Home</Link>
+                            <Link to={'/'} className='btn btn-outline-light me-3 fw-bold'>Home</Link>
                         )}
-                        <Button onClick={handleShow} aria-controls="example-collapse-text" aria-expanded={open} variant="link" >
+                        <Button onClick={handleShow} aria-controls="example-collapse-text" aria-expanded={open} variant="link"  className='px-0' >
                             <img src={updatedProfileImg ? `${serverUrl}/uploads/${updatedProfileImg}` : userProfileImg} alt="Profile" width={'50px'} className='rounded-circle' style={{ cursor: 'pointer', border: '3px solid white' }} />
                         </Button>
                         <Offcanvas show={show} onHide={handleClose} placement='end' className="text-white">
@@ -50,15 +50,17 @@ const Header = () => {
                                 <Card>
                                     <Profile />
                                 </Card>
+                                <div className='text-dark rounded text-center mx-4' >
+                                    <Link to={'/history'} className='btn btn-secondary my-3 py-2 w-100'><h6>Track Progress <i className="fa-solid fa-chart-simple"></i></h6></Link>
+                                </div>
                             </Offcanvas.Body>
                         </Offcanvas>
-
                     </div>
 
                     :
-                    <div>
-                        <Link to={'/login'} className='my-4 btn text-white border fw-bold login-btn'>Login</Link>
-                        <Link to={'/register'} className='mx-4 btn text-white border fw-bold login-btn'>SignUp</Link>
+                    <div className='d-flex flex-wrap justify-content-end gap-2'>
+                        <Link to={'/login'} className='my-4 btn btn-outline-light fw-bold login-btn'>Login</Link>
+                        <Link to={'/register'} className='my-4 mx-3 btn btn-outline-light fw-bold login-btn'>SignUp</Link>
                     </div>
                 }
             </div>

@@ -43,36 +43,35 @@ const Home = () => {
       <div className='text-black min-vh-100'>
         <div style={{ zIndex: 1000, position: 'relative' }}><Header /></div>
         <div className="container ">
-          <div className='row align-items-center justify-content-center'>
-            <div className="col-lg-6 my-2">
+          <div className='row align-items-center justify-content-center text-center text-lg-start'>
+            <div className="col-lg-6 col-md-8 my-3">
               <motion.h1 style={{ textShadow: '0px 4px 8px rgba(216, 231, 231, 0.39)' }}
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
-                className="display-3 fw-bold  text-pop-up-top">
+                className="fw-bold text-pop-up-top">
                 <h1 className="text-dark fw-bold p-1">“Every expert was once a beginner. Keep going!”</h1>
               </motion.h1>
               <p>From critical skills to technical topics, LevelUp supports your professional development.</p>
             </div>
-            <div className="col-lg-6  justify-content-center">
-              <img src={mainImg} alt="" width={'90%'} />
+            <div className="col-lg-6 col-md-8">
+              <img src={mainImg} alt="" className="img-fluid " />
             </div>
           </div>
         </div>
-        <div className="container mt-5 bg-white text-dark">
+        <div className="container mt-5 ">
           <h2 className="text-center fw-bold">Start Learning</h2>
-
-          <div className="row my-5">
+          <div className="row my-5 justify-content-center">
             {lessons.map((lesson, index) => (
-              <div className='col-lg-3 my-4' key={index}>
-                <Card id='quiz-box' style={{ width: '18rem',height:'26rem' }} >
-                  <Card.Img variant="top" src={lesson.link} height={'220px'} />
-                  <Card.Body>
+              <div className='col-lg-3 col-md-6 col-sm-12 mb-4 d-flex justify-content-center' key={index}>
+                <Card id='quiz-box' style={{ width: '18rem'}} className='shadow' >
+                  <Card.Img variant="top" src={lesson.link} height={'220px'}  />
+                  <Card.Body className="d-flex flex-column">
                     <Card.Title>{lesson.title}</Card.Title>
                     <Card.Text>
                       {lesson.description}
                     </Card.Text>
-                    <Button onClick={() => handleSubject(lesson.id, lesson.title)} style={{ backgroundColor: '#11999E' }}>Start Quizz</Button>
+                    <Button onClick={() => handleSubject(lesson.id, lesson.title)} className='mt-auto' style={{ backgroundColor: '#11999E' }}>Start Quizz</Button>
                   </Card.Body>
                 </Card>
               </div>

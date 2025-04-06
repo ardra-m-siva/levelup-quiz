@@ -13,7 +13,7 @@ const ProgressQuiz = () => {
 
     const [isWin, setIsWin] = useState(false)
     const location = useLocation()
-    const { questionNo, level, questions, topic } = location.state
+    const { questionNo, level, questions } = location.state
     const visibleQuestion = questions.slice(0, questionNo + 1)
 
     let percent = (isWin ? questionNo + 1 : questionNo) * 10
@@ -42,7 +42,7 @@ const ProgressQuiz = () => {
                             <p>Suggestion:</p>
                         </div>
                         <div>
-                            <p>Topic:{{topic}}</p>
+                            <p>Topic:</p>
                             <p >Score: <span className={percent > 50 ? 'text-success' : 'text-danger'} style={{ fontWeight: 700 }}>{percent}%</span></p>
                             <p>Grade:</p>
                         </div>

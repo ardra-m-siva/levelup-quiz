@@ -7,7 +7,7 @@ import Gifts from '../components/Gifts';
 
 const Game = () => {
     const [currentLevel, setCurrentLevel] = useState(1)
-    const [progressData, setProgressData] = useState({ questionNo: 0, level: currentLevel, questions: "" ,topic:"" })
+    const [progressData, setProgressData] = useState({ questionNo: 0, level: currentLevel, questions: ""})
     const [questions, setQuestions] = useState([]); // Store fetched questions
     const [isLoaded, setIsLoaded] = useState(false);  // true if the questions loaded
     const [isCorrect, setIsCorrect] = useState(false)
@@ -18,6 +18,7 @@ const Game = () => {
     // for hints in the gifts
     const [hint, setHint] = useState("")
     const [hintClicked, setHintClicked] = useState(false);
+    // setProgressData({...progressData,topic:subject})
 
     const navigate = useNavigate()
     const didFetch = useRef(false)
@@ -37,8 +38,6 @@ const Game = () => {
 
     const fetchQuestions = async () => {
         console.log("inside fetchQuestions");
-
-        setProgressData({...progressData,topic:subject})
         try {
             const response = await fetchQuestionsApi(difficulty, subject)
             console.log(response.data);
@@ -153,10 +152,10 @@ const Game = () => {
                         isLoaded ? (
                             questions?.length > 0 ? (
                                 <>
-                                    <h4 className='m-4'>Q. {questions[currentQuestionIndex].question}</h4>
+                                    <h4 className='my-4'>Q. {questions[currentQuestionIndex].question}</h4>
                                     {/* Answer choices */}
-                                    <div className='row'>
-                                        <div style={{ width: '80%' }} className="my-4 col">
+                                    <div className='row justify-content-center'>
+                                        <div style={{ width: '70%' }} className="my-4 col-md-10 col-12">
                                             {Object.entries(questions[currentQuestionIndex].answers)
                                                 .filter(([key, value]) => value) //removes null values
                                                 .map(([key, value]) => (

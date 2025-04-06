@@ -74,12 +74,12 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
 
     const handlePauseTime = async () => {
         if (gifts.pause > 0) {
-
             try {
                 const result = await removePauseGiftsApi(reqHeaders)
                 if (result.status == 200) {
                     // handle the pause
                     getAllGifts(reqHeaders)
+                    
 
                 }
             } catch (err) {

@@ -30,7 +30,7 @@ export const ProgressHistory = () => {
           <div className="col">
             <PieChart progressData={progressData} />
           </div>
-          <div className='col d-flex align-items-center'>
+          <div className='col d-flex align-items-center justify-content-center'>
             <div className="col-md-4 m-2">
               <div className="bg-secondary rounded p-2 text-white">
                 <h4 className="mb-1">{totalGames}</h4>

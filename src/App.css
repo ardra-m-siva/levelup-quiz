@@ -85,7 +85,7 @@ ul {
   color: white;
 }
 
-.item:hover:hover {
+.item:hover {
   text-decoration: underline;
 }
 
