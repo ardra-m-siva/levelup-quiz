@@ -37,7 +37,7 @@ const Dashboard = () => {
                                     <option value="medium">Medium</option>
                                     <option value="hard">Hard</option>
                                 </select>
-                                <button onClick={handleSubjectSelection} className='btn w-100 text-light fw-bold' style={{ backgroundColor: '#11999E' }}>Start</button>
+                                <button onClick={handleSubjectSelection} className='btn w-25 text-light fw-bold' style={{ backgroundColor: '#11999E' }}>Start</button>
                             </div>
                         </div>
                         <div className="col-lg-6 d-flex justify-content-center align-items-center text-black">

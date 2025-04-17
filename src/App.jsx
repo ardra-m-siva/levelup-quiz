@@ -4,6 +4,7 @@ import './App.css'
 import Home from './pages/Home'
 import Auth from './pages/Auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Game from './pages/Game';
 import Dashboard from './pages/Dashboard';
 import ProgressQuiz from './pages/ProgressQuiz';

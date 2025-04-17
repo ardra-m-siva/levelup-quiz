@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAllGiftsApi, removeAddTimeGiftsApi, removeHintGiftsApi, removePauseGiftsApi, removeSkipGiftsApi } from '../services/allApi';
 
-const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleTheHints }) => {
+const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleTheHints,setIsPaused }) => {
     const [reqHeaders, setRequestHeaders] = useState({})
 
     const [gifts, setGifts] = useState({
@@ -79,8 +79,10 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
                 if (result.status == 200) {
                     // handle the pause
                     getAllGifts(reqHeaders)
-                    
-
+                    setIsPaused(true);
+                    setTimeout(() => {
+                        setIsPaused(false);
+                    }, 5000);
                 }
             } catch (err) {
                 console.log(err);

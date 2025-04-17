@@ -15,6 +15,7 @@ const Game = () => {
     const [correctAnswer, setCorrectAnswer] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(15);
+    const [isPaused, setIsPaused] = useState(false);
     // for hints in the gifts
     const [hint, setHint] = useState("")
     const [hintClicked, setHintClicked] = useState(false);
@@ -142,7 +143,7 @@ const Game = () => {
                         </div>
                         {/* timer */}
                         <div className="col">
-                            <Timer start={isLoaded} handleTimeUp={handleTimeUp} timeLeft={timeLeft} setTimeLeft={setTimeLeft} key={currentQuestionIndex} />
+                            <Timer start={isLoaded} handleTimeUp={handleTimeUp} timeLeft={timeLeft} setTimeLeft={setTimeLeft} key={currentQuestionIndex} isPaused={isPaused} />
                         </div>
                     </div>
                 </div>
@@ -195,7 +196,7 @@ const Game = () => {
                 )}
 
                 <div className='d-flex justify-content-center'>
-                    <Gifts setTimeLeft={setTimeLeft} setCurrentQuestionIndex={setCurrentQuestionIndex} handleNavigation={handleNavigation} handleTheHints={handleTheHints} />
+                    <Gifts setTimeLeft={setTimeLeft} setCurrentQuestionIndex={setCurrentQuestionIndex} handleNavigation={handleNavigation} handleTheHints={handleTheHints} setIsPaused={setIsPaused} />
                 </div>
             </div>
         </>

@@ -27,24 +27,24 @@ export const ProgressHistory = () => {
         {/* Overall Stats */}
         <h2 className="text-center mb-4">Progress History</h2>
         <div className="row text-center mb-4">
-          <div className="col">
+          <div className="col-12 col-lg-6 mb-4">
             <PieChart progressData={progressData} />
           </div>
-          <div className='col d-flex align-items-center justify-content-center'>
-            <div className="col-md-4 m-2">
-              <div className="bg-secondary rounded p-2 text-white">
+          <div className='col-12 col-lg-6 d-flex flex-wrap justify-content-center align-items-center'>
+            <div className="m-2" style={{ minWidth: "160px" }}>
+              <div className="bg-secondary rounded p-3 text-white shadow">
                 <h4 className="mb-1">{totalGames}</h4>
                 <p className="text-white mb-0 ">Total Games</p>
               </div>
             </div>
-            <div className="col-md-4 m-2">
-              <div className=" bg-success text-white rounded p-2">
+            <div className=" m-2" style={{ minWidth: "160px" }}>
+              <div className=" bg-success text-white rounded p-3 shadow">
                 <h4 className="mb-1">{totalWins}</h4>
                 <p className="mb-0">Total Wins</p>
               </div>
             </div>
-            <div className="col-md-4 m-2">
-              <div className=" bg-danger text-white rounded p-2">
+            <div className=" m-2" style={{ minWidth: "160px" }}>
+              <div className=" bg-danger text-white rounded p-3 shadow">
                 <h4 className="mb-1">{totalLosses}</h4>
                 <p className="mb-0">Total Losses</p>
               </div>
@@ -53,10 +53,10 @@ export const ProgressHistory = () => {
         </div>
 
         {/* Subject-wise Performance */}
-        <h4 className="mb-3 text-center my-4">Subject-wise Performance</h4>
+        <h4 className="text-center my-4">Subject-wise Performance</h4>
         <div className="row">
-          <div className="col">
-            <div className="list-group my-5">
+          <div className="col-12 col-md-6">
+            <div className="list-group mb-5">
               {progressData.map((item, index) => (
                 <div key={index} className="list-group-item">
                   <h5 className="mb-1">{item.subject}</h5>
@@ -69,10 +69,10 @@ export const ProgressHistory = () => {
               ))}
             </div>
           </div>
-          <div className="col">
+          <div className="col-12 col-md-6">
             <div className="card text-center shadow-sm p-3 my-5">
               <div className="card-body">
-                <h5 className="card-title my-3">Player Progress</h5>
+                <h5 className="card-title mb-3">Player Progress</h5>
                 <p className="card-text">
                   <strong>First Played:</strong> {firstPlayed}
                 </p>
