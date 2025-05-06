@@ -62,3 +62,12 @@ export const getProgressOfSubject = (reqHeaders,subject) => {
 export const addProgressOfSubject = (reqHeaders,reqBody) => {
     return commonApi('POST', `${serverUrl}/game-end`, reqBody, reqHeaders)
 }
+
+// testimonial section
+export const addTestimonialApi = (reqBody) => {
+    return commonApi('POST', `${serverUrl}/add-testimonial`, reqBody)
+}
+
+export const getAllTestimonialApi=()=>{
+    return commonApi('GET', `${serverUrl}/get-testimonial`, {})  
+}

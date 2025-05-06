@@ -58,18 +58,20 @@ const Auth = ({ isLogin }) => {
 
   return (
     <>
-      <div style={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
-        <div className='p-3'>
+      <div  className ="container-fluid min-vh-100 d-flex flex-column" style={{ backgroundColor: '#F7F7F7' }}>
+        <div className='p-2'>
           <Link to={'/'} className='btn'><i className="fa-solid fa-arrow-left fa-xl " ></i></Link>
         </div>
-        <div className='d-flex justify-content-center align-items-center mt-5'>
-          {/* Registration Form */}
-          <div className='d-flex flex-wrap justify-content-between align-items-center text-light' style={{ backgroundColor: '#11999E', borderRadius: '20px', padding: '50px 40px', width: '1000px', transform: 'translateY(0)', animation: 'fadeIn 0.5s ease-in-out' }} >
-            <div className="d-flex justify-content-center d-sm-block" style={{ flex: 1 }}>
+        <div className='flex-grow-1 d-flex justify-content-center align-items-center'>
+          {/* Registration Form section*/}
+          <div className='row w-100 m-2 p-3 p-md-4 rounded-4' style={{ backgroundColor: '#11999E', maxWidth: '1000px' }} >
+            {/* left image */}
+            <div className="col-12 col-md-6 d-flex align-items-center mb-4 mb-md-0">
               <img style={{ width: '100%', maxWidth: '400px' }} src={regImg} className='img-fluid' alt="image" />
             </div>
-            <div style={{ flex: 1, minWidth: '400px' }}>
-              <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: '40px', marginBottom: '30px', textShadow: '0px 4px 8px rgba(172, 191, 199, 0.5)', letterSpacing: '1px' }} className='text-center text-light fw-bold'>
+            {/* right form */}
+            <div className="col-12 col-md-6 text-light">
+              <h2 className="text-center fw-bold mb-4" style={{ fontSize: '2.5rem' ,fontFamily: "'Poppins', sans-serif",textShadow: '0px 4px 8px rgba(172, 191, 199, 0.5)', letterSpacing: '1px'}}>
                 {isLogin ? 'Login' : 'Register'}
               </h2>
 
@@ -91,11 +93,13 @@ const Auth = ({ isLogin }) => {
                 <label htmlFor="floatingPassword">Password</label>
               </FloatingLabel>
               {/* submit button */}
-              <button onClick={handleSubmit} className="btn w-100 text-black" style={{ color: '#25374D', borderRadius: '40px', padding: '12px', fontSize: '20px', cursor: 'pointer', transition: '0.3s ease', boxShadow: '0px 4px 10px rgba(186, 215, 223, 0.4)', backgroundColor: '#EDEDED' }} onMouseEnter={(e) => (e.target.style.transform = 'scale(1.02)')} onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')} >
+              <button onClick={handleSubmit} className="btn w-100 text-black" 
+              style={{ color: '#25374D', borderRadius: '40px', padding: '12px', fontSize: '20px', cursor: 'pointer', transition: '0.3s ease', boxShadow: '0px 4px 10px rgba(186, 215, 223, 0.4)', backgroundColor: '#EDEDED' }}
+               onMouseEnter={(e) => (e.target.style.transform = 'scale(1.02)')} onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')} >
                 {isLogin ? 'Login' : 'Register'} {loginedToSite && <Spinner animation="border" variant="dark" size='sm' />}
               </button>
 
-              <div className='mt-4 text-center ' >
+              <div className='mt-4 text-center text-light' >
                 {isLogin ? <p>New User? <Link to={'/register'} className='text-white'>Register</Link></p> : <p>Already a User? Please <Link to={'/login'} className='text-white'>Login</Link></p>}
               </div>
             </div>

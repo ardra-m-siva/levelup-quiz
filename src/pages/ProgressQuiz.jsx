@@ -26,57 +26,64 @@ const ProgressQuiz = () => {
     const { questionNo, questions } = location.state //no of correct answer is in the questionNo say 7
     const visibleQuestion = questions.slice(0, questionNo + 1)  // need to visble the current question answer which gone wrong  say 8
 
-    console.log("questionNo",questionNo); //7
-    console.log("iswin",isWin);
-    
+    console.log("questionNo", questionNo);
+    console.log("isRight ProgressQuiz", isRight);
+
+
 
 
     let percent = (isWin ? questionNo + 1 : questionNo) * 10
 
     useEffect(() => {
-        if (isRight && (questionNo == 9)) {
-            setIsWin(true)
-        } else {
-            setIsWin(false)
-        }
-    }, [questionNo])
+        setIsWin((questionNo === 9) && isRight)
+    }, [questionNo, isRight])
 
     useEffect(() => {
-        gradeScored()
-        sentProgressData()
-    }, [])
+        const win = (questionNo === 9) && isRight;
+        setIsWin(win); 
+    
+        const outOfTen = win ? questionNo + 1 : questionNo;
+    
+        // Set grade
+        if (outOfTen >= 9) setGrade({ scored: "A+", description: "Excellent" });
+        else if (outOfTen >= 8) setGrade({ scored: "A", description: "Very Good" });
+        else if (outOfTen >= 7) setGrade({ scored: "B", description: "Good" });
+        else if (outOfTen >= 6) setGrade({ scored: "C", description: "Average" });
+        else if (outOfTen >= 5) setGrade({ scored: "D", description: "Below Average" });
+        else setGrade({ scored: "F", description: "Fail" });
+    
+        sentProgressData(win);
+    }, [questionNo])
 
-    const sentProgressData = async () => {
+    const sentProgressData = async (win) => {
+        try{
         let token = sessionStorage.getItem('token')
         const reqHeader = {
             "Authorization": `Bearer ${token}`
         }
-        if (!cTopic || !level || typeof isWin !== "boolean") {
-            console.error("Missing required data:", { cTopic, level, isWin });
+        console.log("typeof win",typeof win);
+
+        if (!cTopic || !level || typeof win !== "boolean") {
+            console.error("Missing required data:", { cTopic, level, win });
             return;
         }
-        console.log("isWin",isWin);
-        console.log("level",level);
         
+        console.log("win sentProgressData", win);
+        console.log("level sentProgressData", level);
         const reqBody = {
-            subject: cTopic, level, isWin
+            subject: cTopic,
+            level: level,
+            isWin: win
         }
+  
         const result = await addProgressOfSubject(reqHeader, reqBody)
         if (result.status == 200) {
             console.log(result.data);
         }
-    }
-
-    const gradeScored = (questionNo) => {
-        const outOfTen = isWin ? questionNo + 1 : questionNo
-        switch (outOfTen) {
-            case outOfTen >= 9: setGrade({ scored: "A+", description: "Excellent" }); break
-            case outOfTen >= 8: setGrade({ scored: "A", description: "Very Good" }); break
-            case outOfTen >= 7: setGrade({ scored: "B", description: "Good" }); break
-            case outOfTen >= 6: setGrade({ scored: "C", description: "Average" }); break
-            case outOfTen >= 5: setGrade({ scored: "D", description: "Below Average" }); break
-            case outOfTen < 5: setGrade({ scored: "F", description: "Fail" }); break
-        }
+       }catch(err){
+        console.log(err);
+        
+       }
     }
 
     return (

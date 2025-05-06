@@ -29,7 +29,7 @@ const Game = () => {
     const { cTopic, setCTopic } = useContext(currentTopicContext)
     const { level, setLevel } = useContext(currentLevelContext)
     const { isRight,setIsRight} = useContext(isAnswerRightContext)
-
+console.log("isRight Out",isRight);
 
 
     useEffect(() => {
@@ -80,7 +80,9 @@ const Game = () => {
         const isCorrectAnswer = correctAns.includes(selectedKey);
         setSelectedAnswer(selectedKey);
         setIsCorrect(isCorrectAnswer);
-        setIsRight(isCorrectAnswer)
+        setIsRight(isCorrectAnswer);
+        console.log("isRight In",isRight);
+
 
         setTimeout(async () => {
             if (isCorrectAnswer) {

@@ -39,7 +39,7 @@ const Header = () => {
                         {location.pathname !== "/" && (
                             <Link to={'/'} className='btn btn-outline-light me-3 fw-bold'>Home</Link>
                         )}
-                        <Button onClick={handleShow} aria-controls="example-collapse-text" aria-expanded={open} variant="link"  className='px-0' >
+                        <Button onClick={handleShow} aria-controls="example-collapse-text" aria-expanded={open} variant="link" className='px-0' >
                             <img src={updatedProfileImg ? `${serverUrl}/uploads/${updatedProfileImg}` : userProfileImg} alt="Profile" width={'50px'} className='rounded-circle' style={{ cursor: 'pointer', border: '3px solid white' }} />
                         </Button>
                         <Offcanvas show={show} onHide={handleClose} placement='end' className="text-white">
@@ -58,7 +58,10 @@ const Header = () => {
                     </div>
 
                     :
+
                     <div className='d-flex flex-wrap justify-content-end gap-2'>
+                        <Link to={'/about'} className='btn btn-outline-light me-3 my-4 fw-bold'>About</Link>
+                        <Link to={'/contact'} className='btn btn-outline-light me-3 my-4 fw-bold'>Contact</Link>
                         <Link to={'/login'} className='my-4 btn btn-outline-light fw-bold login-btn'>Login</Link>
                         <Link to={'/register'} className='my-4 mx-3 btn btn-outline-light fw-bold login-btn'>SignUp</Link>
                     </div>
