@@ -98,3 +98,14 @@ ul {
   transform: scale(1.03);
   transition: all 0.5s ease;
 }
+
+.straekStyle{
+  border-bottom: 1px solid white;
+}
+
+@media screen and (min-width:760px){
+  .straekStyle{
+    border-bottom: none;
+    border-right: 1px solid white;
+  }
+}

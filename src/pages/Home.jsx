@@ -50,7 +50,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
                 className="fw-bold text-pop-up-top">
-                <h1 className="text-dark fw-bold p-1">“Every expert was once a beginner. Keep going!”</h1>
+                <p className="text-dark fw-bold p-1">“Every expert was once a beginner. Keep going!”</p>
               </motion.h1>
               <p>From critical skills to technical topics, LevelUp supports your professional development.</p>
             </div>

@@ -37,7 +37,6 @@ const Streak = () => {
             }
         } catch (err) {
             console.log(err);
-
         }
     }
 
@@ -59,13 +58,13 @@ const Streak = () => {
 
                 <div className='row align-items-center '>
                     {/* Streak Info */}
-                    <div className="col-12 col-md-6 fs-4 text-light border-end  " >
+                    <div className="col-12 col-md-6 fs-4 text-light straekStyle" >
                         <p className="fw-bold">Current Streak: <span className='d-block fs-4 ' style={{ color: "#11999E" }}>{currentStreak} Days</span></p>
                         <p className="fw-bold">Longest Streak: <span className='d-block fs-4 ' style={{ color: "#11999E" }}>{longestStreak} Days</span></p>
                     </div>
 
                     {/* Streak Bar */}
-                    <div className="col-12 col-md-6 d-flex flex-wrap justify-content-center gap-3">
+                    <div className="col-12 col-md-6 d-flex flex-wrap justify-content-center gap-3 pt-3">
                         {days.map((day, index) => (
                             <div key={index} className={`streak-dot px-3 py-2 rounded-circle text-white fw-bold ${activeDays.includes(index) ? "active" : ""}`} >
                                 {day}

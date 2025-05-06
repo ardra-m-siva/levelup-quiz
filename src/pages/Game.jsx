@@ -1,33 +1,53 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
-import { fetchQuestionsApi } from '../services/allApi';
+import { fetchQuestionsApi, getProgressOfSubject } from '../services/allApi';
 import { Spinner } from 'react-bootstrap';
 import Gifts from '../components/Gifts';
+import { currentLevelContext, currentTopicContext, isAnswerRightContext } from '../context/subjectContext';
 
 const Game = () => {
-    const [currentLevel, setCurrentLevel] = useState(1)
-    const [progressData, setProgressData] = useState({ questionNo: 0, level: currentLevel, questions: ""})
     const [questions, setQuestions] = useState([]); // Store fetched questions
-    const [isLoaded, setIsLoaded] = useState(false);  // true if the questions loaded
-    const [isCorrect, setIsCorrect] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false); // true if the questions loaded
     const [selectedAnswer, setSelectedAnswer] = useState("")
     const [correctAnswer, setCorrectAnswer] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(15);
     const [isPaused, setIsPaused] = useState(false);
+
+
     // for hints in the gifts
     const [hint, setHint] = useState("")
     const [hintClicked, setHintClicked] = useState(false);
-    // setProgressData({...progressData,topic:subject})
-
     const navigate = useNavigate()
     const didFetch = useRef(false)
     const location = useLocation()
+    const [isCorrect, setIsCorrect]= useState(false)
+
     const { subject, title, difficulty } = location.state
+    const [progressData, setProgressData] = useState({ questionNo: 0, questions: "" })
+    const { cTopic, setCTopic } = useContext(currentTopicContext)
+    const { level, setLevel } = useContext(currentLevelContext)
+    const { isRight,setIsRight} = useContext(isAnswerRightContext)
+
+
 
     useEffect(() => {
-        setTimeLeft(15);  // Reset timer to initial value when the question changes
+        const fetchProgress = async () => {
+            let token = sessionStorage.getItem('token')
+            const reqHeader = {
+                "Authorization": `Bearer ${token}`
+            }
+            const result = await getProgressOfSubject(reqHeader, subject)
+            if (result.status == 200) {
+                setLevel(result.data.level)
+            }
+        }
+        fetchProgress()
+    }, [subject])
+
+    useEffect(() => {
+        setTimeLeft(15); //Reset timer to initial value when the question changes
     }, [currentQuestionIndex]);
 
     useEffect(() => {
@@ -35,6 +55,7 @@ const Game = () => {
             didFetch.current = true;
             fetchQuestions();
         }
+        setCTopic(subject)
     }, []);
 
     const fetchQuestions = async () => {
@@ -59,6 +80,7 @@ const Game = () => {
         const isCorrectAnswer = correctAns.includes(selectedKey);
         setSelectedAnswer(selectedKey);
         setIsCorrect(isCorrectAnswer);
+        setIsRight(isCorrectAnswer)
 
         setTimeout(async () => {
             if (isCorrectAnswer) {
@@ -68,7 +90,6 @@ const Game = () => {
                     setProgressData({ ...progressData, questionNo: currentQuestionIndex + 1 })
 
                 } else {
-                    setCurrentLevel(currentLevel + 1)
                     navigate('/progress', { state: progressData })
                     setCurrentQuestionIndex(0)
                 }
@@ -104,7 +125,7 @@ const Game = () => {
 
     return (
         <>
-            <div className=' min-vh-100' style={{paddingBottom: '80px'}}>
+            <div className=' min-vh-100' style={{ paddingBottom: '80px' }}>
                 <nav style={{ borderRadius: '0px 0px 300px 300px', backgroundColor: '#09585b' }} className='text-dark'>
                     {/* back button */}
                     <div className='p-2 d-flex justify-content-between'>
@@ -113,7 +134,7 @@ const Game = () => {
                         <div className='btn'><i className="fa-solid fa-circle-info fa-2xl text-light"></i></div>
                     </div>
                     {/* level  */}
-                    <h2 className='text-center text-light pb-3 fw-bold'>Level <span>{currentLevel}</span></h2>
+                    <h2 className='text-center text-light pb-3 fw-bold'>Level <span>{level}</span></h2>
                 </nav>
 
                 <div >

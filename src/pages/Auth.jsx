@@ -102,7 +102,7 @@ const Auth = ({ isLogin }) => {
           </div>
         </div>
       </div>
-      
+
     </>
   )
 }

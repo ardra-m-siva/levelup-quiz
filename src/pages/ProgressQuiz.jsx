@@ -1,10 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Modal, ProgressBar } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import Winlose from '../components/Winlose';
+import { addProgressOfSubject } from '../services/allApi';
+import { currentLevelContext, currentTopicContext, isAnswerRightContext } from '../context/subjectContext';
 
 const ProgressQuiz = () => {
+    const { level, setLevel } = useContext(currentLevelContext)
+    const { cTopic, setCTopic } = useContext(currentTopicContext)
     const [show, setShow] = useState(false);
+    const [grade, setGrade] = useState({
+        scored: "",
+        description: ""
+    });
+    const { isRight, setIsRight } = useContext(isAnswerRightContext)
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     useEffect(() => {
@@ -13,18 +23,61 @@ const ProgressQuiz = () => {
 
     const [isWin, setIsWin] = useState(false)
     const location = useLocation()
-    const { questionNo, level, questions } = location.state
-    const visibleQuestion = questions.slice(0, questionNo + 1)
+    const { questionNo, questions } = location.state //no of correct answer is in the questionNo say 7
+    const visibleQuestion = questions.slice(0, questionNo + 1)  // need to visble the current question answer which gone wrong  say 8
+
+    console.log("questionNo",questionNo); //7
+    console.log("iswin",isWin);
+    
+
 
     let percent = (isWin ? questionNo + 1 : questionNo) * 10
+
     useEffect(() => {
-        if (questionNo && (questionNo == 9)) {
+        if (isRight && (questionNo == 9)) {
             setIsWin(true)
         } else {
             setIsWin(false)
         }
-
     }, [questionNo])
+
+    useEffect(() => {
+        gradeScored()
+        sentProgressData()
+    }, [])
+
+    const sentProgressData = async () => {
+        let token = sessionStorage.getItem('token')
+        const reqHeader = {
+            "Authorization": `Bearer ${token}`
+        }
+        if (!cTopic || !level || typeof isWin !== "boolean") {
+            console.error("Missing required data:", { cTopic, level, isWin });
+            return;
+        }
+        console.log("isWin",isWin);
+        console.log("level",level);
+        
+        const reqBody = {
+            subject: cTopic, level, isWin
+        }
+        const result = await addProgressOfSubject(reqHeader, reqBody)
+        if (result.status == 200) {
+            console.log(result.data);
+        }
+    }
+
+    const gradeScored = (questionNo) => {
+        const outOfTen = isWin ? questionNo + 1 : questionNo
+        switch (outOfTen) {
+            case outOfTen >= 9: setGrade({ scored: "A+", description: "Excellent" }); break
+            case outOfTen >= 8: setGrade({ scored: "A", description: "Very Good" }); break
+            case outOfTen >= 7: setGrade({ scored: "B", description: "Good" }); break
+            case outOfTen >= 6: setGrade({ scored: "C", description: "Average" }); break
+            case outOfTen >= 5: setGrade({ scored: "D", description: "Below Average" }); break
+            case outOfTen < 5: setGrade({ scored: "F", description: "Fail" }); break
+        }
+    }
 
     return (
         <>
@@ -32,25 +85,25 @@ const ProgressQuiz = () => {
                 {/* restart game & quit game */}
                 <div className='container'>
                     <div className='text-light py-2' style={{ backgroundColor: '#11999E' }}>
-                        <h2 className='text-center'>{isWin? <span>Level {level} Completed</span> : <span>Level {level} Failed</span>}</h2>
+                        <h2 className='text-center'>{isWin ? <span>Level {level} Completed</span> : <span>Level {level} Failed</span>}</h2>
                         <p className='text-center'>Quiz Information</p>
                     </div>
                     <div className='my-4 d-flex justify-content-evenly'>
                         <div>
                             <p>Correct Answer: {isWin ? questionNo + 1 : questionNo}</p>
                             <p>Total Questions: 10</p>
-                            <p>Suggestion:</p>
+                            <p>Grade: {grade.scored}</p>
                         </div>
                         <div>
-                            <p>Topic:</p>
+                            <p>Topic: {cTopic.toUpperCase()}</p>
                             <p >Score: <span className={percent > 50 ? 'text-success' : 'text-danger'} style={{ fontWeight: 700 }}>{percent}%</span></p>
-                            <p>Grade:</p>
+                            <p>Description: {grade.description}</p>
                         </div>
                     </div>
-                    <div className='d-flex justify-content-center my-5'><ProgressBar className='w-50' striped variant="success" now={(isWin ? questionNo + 1 : questionNo) * 10} /></div>
+                    <div className='d-flex justify-content-center my-5'><ProgressBar className='w-50' striped variant="success" now={percent} /></div>
                     <div className='d-flex justify-content-evenly'>
                         <Link to={'/'} className='btn btn-danger'>Quit</Link>
-                        <Link onClick={ ()=>sessionStorage.removeItem('claimedReward')} to={'/dashboard'} className='btn btn-primary'>Restart</Link>
+                        <Link onClick={() => sessionStorage.removeItem('claimedReward')} to={'/dashboard'} className='btn btn-primary'>Restart</Link>
                     </div>
                     <hr className='my-5' />
 

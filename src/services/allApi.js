@@ -4,25 +4,20 @@ import serverUrl from "./serverUrl";
 export const registerApi = (reqBody) => {
     return commonApi('POST', `${serverUrl}/register`, reqBody)
 }
-
 export const loginApi = (reqBody) => {
     return commonApi('POST', `${serverUrl}/login`, reqBody)
 }
-
 export const editProfileApi = (reqBody, reqHeader) => {
     return commonApi('PUT', `${serverUrl}/update`, reqBody, reqHeader)
 }
 
 // fetching questions 
-
 export const fetchQuestionsApi = (difficulty,subject) => {
     return commonApi('GET',`${serverUrl}/api/questions?difficulty=${difficulty}&subject=${subject}`) 
 }
-
 export const getStreakDetailsApi = (reqHeaders) => {
     return commonApi('POST', `${serverUrl}/streak`, {},reqHeaders)
 }
-
 export const getStreaksApi = (reqHeaders) => {
     return commonApi('GET', `${serverUrl}/get-streak`, {},reqHeaders)
 }
@@ -58,4 +53,12 @@ export const removeHintGiftsApi = (reqHeaders) => {
 }
 export const removePauseGiftsApi = (reqHeaders) => {
     return commonApi('GET', `${serverUrl}/remove-pause`, {},reqHeaders)
+}
+
+// progress of the user
+export const getProgressOfSubject = (reqHeaders,subject) => {
+    return commonApi('GET', `${serverUrl}/game-start?subject=${subject}`, {}, reqHeaders)
+}
+export const addProgressOfSubject = (reqHeaders,reqBody) => {
+    return commonApi('POST', `${serverUrl}/game-end`, reqBody, reqHeaders)
 }

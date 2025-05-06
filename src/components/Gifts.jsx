@@ -23,7 +23,6 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
     const getAllGifts = async (reqHeader) => {
         try {
             const result = await getAllGiftsApi(reqHeader)
-            console.log(result.data);
             setGifts({
                 extraTime: result.data.addOnTime,
                 hints: result.data.hint,
