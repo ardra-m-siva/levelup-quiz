@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { addTestimonialApi } from '../services/allApi'
+import { toast, ToastContainer } from 'react-toastify'
+
 
 const Contact = () => {
     const [inputData, setInputData] = useState({
@@ -15,18 +17,18 @@ const Contact = () => {
             try {
                 const result = await addTestimonialApi(inputData)
                 if (result.status == 200) {
-                    alert(result.data.message);
+                    toast.success(result.data.message);
                     setInputData({
                         name: "", email: "", message: ""
                     })
                 } else {
-                    alert(result.data?.message)
+                    toast.error(result.data?.message)
                 }
             } catch (err) {
                 console.log(err);
             }
         } else {
-            alert("Please Enter All Details Before Submit")
+           toast.warn("Please Enter All Details Before Submit")
         }
     }
     return (
@@ -88,6 +90,8 @@ const Contact = () => {
                 </div>
             </div>
             <Footer />
+            <ToastContainer theme="colored" position="top-center" />
+
         </>
     )
 }

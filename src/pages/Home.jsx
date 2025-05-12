@@ -6,6 +6,7 @@ import { Button, Card } from 'react-bootstrap';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { getAllTestimonialApi } from '../services/allApi';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Home = () => {
   const [allTestimonials, setAllTestimonials] = useState([])
@@ -38,7 +39,7 @@ const Home = () => {
       title
     }
     if (!isLoginTo) {
-      alert("Please Login")
+      toast.warn("Please Login", { autoClose: 2000 ,  className: 'custom-toast'});
     } else {
       navigate('/game', { state: subjectInfo })
     }
@@ -131,6 +132,7 @@ const Home = () => {
         </div>
         <Footer />
       </div>
+      <ToastContainer theme="colored" position="top-center" />
     </>
   )
 }

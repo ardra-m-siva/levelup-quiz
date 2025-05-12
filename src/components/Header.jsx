@@ -6,6 +6,7 @@ import userProfileImg from '../assets/userProfile.jpg'
 import serverUrl from '../services/serverUrl'
 
 
+
 const Header = () => {
     const [isLogin, setIsLogin] = useState(false)
     const [show, setShow] = useState(false);
@@ -14,7 +15,6 @@ const Header = () => {
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-
 
     useEffect(() => {
         const data = JSON.parse(sessionStorage.getItem('user'))

@@ -120,3 +120,14 @@ ul {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
+
+/* for toast - please login*/
+
+.custom-toast {
+  background-color: #1e293b !important; /* slate-800 */
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  color: #fff !important;
+}
+
+

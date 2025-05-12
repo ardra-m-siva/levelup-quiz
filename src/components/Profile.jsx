@@ -4,6 +4,8 @@ import userProfileImg from '../assets/userProfile.jpg'
 import profileUpload from '../assets/uploadProfile.png'
 import { editProfileApi } from '../services/allApi'
 import serverUrl from '../services/serverUrl'
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
 
 const Profile = () => {
   const [updateProfile, setUpdateProfile] = useState({
@@ -13,6 +15,7 @@ const Profile = () => {
   const [existingProfilePic, setExistingProfilePic] = useState("")
   const [player, setPlayer] = useState({})
   const [show, setShow] = useState(false);
+  const navigate = useNavigate()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -65,8 +68,19 @@ const Profile = () => {
       }
       handleClose()
     } else {
-      alert("Please fill the form")
+      toast.warn("Please fill the form.",{ autoClose: 2000})
     }
+  }
+
+  const handleLogout = () => {
+    sessionStorage.clear()
+    // Show feedback
+    toast.error("You have been logging out.", { autoClose: 2000});
+
+    // Delay navigation to allow toast to be seen
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
   }
   return (
     <>
@@ -93,7 +107,7 @@ const Profile = () => {
             {/* profile summary if needed */}
             <div className="mt-3 d-flex">
               <button onClick={handleShow} className="btn btn-warning me-3"><i className="fa-solid fa-user-pen fa-lg"></i> <br /> Edit Profile</button>
-              <button className="btn btn-danger "> <i className="fa-solid fa-arrow-right-from-bracket fa-xl"></i> Logout</button>
+              <button onClick={handleLogout} className="btn btn-danger "> <i className="fa-solid fa-arrow-right-from-bracket fa-xl"></i> Logout</button>
             </div>
           </div>
         </div>
@@ -116,6 +130,7 @@ const Profile = () => {
               <input onChange={e => setUpdateProfile({ ...updateProfile, username: e.target.value })} type="text" className='form-control ms-2  mt-2' placeholder='Enter  Username' />
             </div>
           </div>
+          <ToastContainer theme="colored" position="top-center" />
         </Modal.Body>
         <Modal.Footer style={{ borderTop: "none" }}>
           <Button variant="secondary" onClick={handleClose} style={{ backgroundColor: "#40514E", border: "none" }}>
@@ -126,6 +141,7 @@ const Profile = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer theme="colored" position="top-center" />
     </>
   )
 }

@@ -28,19 +28,19 @@ const Winlose = ({ isWin }) => {
         setRewardClaimed(true);
 
         try {
-            if(sessionStorage.getItem('token')){
-                let token =sessionStorage.getItem('token')
-                const reqHeaders={
-                    "Authorization":`Bearer ${token}`
+            if (sessionStorage.getItem('token')) {
+                let token = sessionStorage.getItem('token')
+                const reqHeaders = {
+                    "Authorization": `Bearer ${token}`
                 }
-               let result= await randomGift.api(reqHeaders);
-               console.log(result.data);
-               sessionStorage.setItem('claimedReward', randomGift.name);
-               
-            console.log(`Reward "${randomGift.name}" successfully saved to database!`);
+                let result = await randomGift.api(reqHeaders);
+                console.log(result.data);
+                sessionStorage.setItem('claimedReward', randomGift.name);
+
+                console.log(`Reward "${randomGift.name}" successfully saved to database!`);
             }
             // Call the API function dynamically
-            
+
         } catch (error) {
             console.error(`Error saving reward: ${randomGift.name}`, error);
         }
@@ -64,7 +64,7 @@ const Winlose = ({ isWin }) => {
                                 <p className="text-success mt-3">🎉 You won: <strong>{gift}</strong>!</p>
                             </div>
                         )}
-                    
+
                     </div>
                 </div>
             </div>

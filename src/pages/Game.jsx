@@ -58,7 +58,6 @@ const Game = () => {
     }, []);
 
     const fetchQuestions = async () => {
-        console.log("inside fetchQuestions");
         try {
             const response = await fetchQuestionsApi(difficulty, subject)
             setQuestions(response.data);

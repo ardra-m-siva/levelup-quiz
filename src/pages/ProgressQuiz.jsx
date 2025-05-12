@@ -79,7 +79,6 @@ const ProgressQuiz = () => {
             }
         } catch (err) {
             console.log(err);
-
         }
     }
 

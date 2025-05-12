@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAllGiftsApi, removeAddTimeGiftsApi, removeHintGiftsApi, removePauseGiftsApi, removeSkipGiftsApi } from '../services/allApi';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleTheHints,setIsPaused }) => {
     const [reqHeaders, setRequestHeaders] = useState({})
@@ -49,7 +50,7 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
                 console.log(err);
             }
         } else {
-            console.log("No extra time gifts available!");
+            toast.error("No extra time gifts available!");
         }
     };
 
@@ -67,7 +68,7 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
                 console.log(err);
             }
         } else {
-            console.log("No hints gifts available!");
+            toast.error("No hints gifts available!");
         }
     };
 
@@ -87,7 +88,7 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
                 console.log(err);
             }
         } else {
-            console.log("No pause gifts available!");
+            toast.error("No pause gifts available!");
         }
     };
 
@@ -110,7 +111,7 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
                 console.log(err);
             }
         } else {
-            console.log("No skip gifts available!");
+            toast.error("No skip gifts available!");
         }
     };
 
@@ -135,6 +136,8 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
                     {gifts.skip > 0 && <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">{gifts.skip}</span>}
                 </button>
             </div>
+            <ToastContainer theme="colored" position="top-center" />
+
         </>
     )
 }

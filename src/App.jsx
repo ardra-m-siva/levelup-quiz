@@ -11,6 +11,7 @@ import ProgressQuiz from './pages/ProgressQuiz';
 import { ProgressHistory } from './pages/ProgressHistory';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
           <Route path={'/contact'} element={<Contact/>}/>
         </Routes>
     </>
-  )
+  ) 
 }
 
 export default App
