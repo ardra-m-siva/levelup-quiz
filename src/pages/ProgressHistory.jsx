@@ -40,19 +40,27 @@ export const ProgressHistory = () => {
     }
   }
 
+  const topSubject = progressData.reduce((best, item) => {
+    const winRate = item.gamesPlayed ? item.wins / item.gamesPlayed : 0;
+    const bestRate = best.gamesPlayed ? best.wins / best.gamesPlayed : 0;
+    return winRate > bestRate ? item : best;
+  }, progressData[0]);
 
-  const progress = {
-    firstPlayed: "March 1, 2025",
-    streak: 10, // Number of consecutive days played
-    consistency: 80, // % of days played since first played
+  const maxLossSubject = progressData.reduce((max, item) =>
+    item.lose > max.lose ? item : max, progressData[0]);
+
+  const noWins = progressData.filter(item => item.wins === 0);
+
+  const determineGoal = () => {
+    const subjectsNeedingMoreWins = progressData.filter(item => item.wins < 3);
+    if (subjectsNeedingMoreWins.length === 0) {
+      return "🎉 Great job! You've met the goal in all subjects!";
+    } else if (totals.totalGames < 10) {
+      return "🧪 Keep going! Play at least 10 games to unlock stats.";
+    } else {
+      return `🎯Win at least 3 games in ${subjectsNeedingMoreWins.length} subject(s)`;
+    }
   };
-
-  // Calculate total stats
-  // const totalGames = progressData.reduce((acc, item) => acc + item.gamesPlayed, 0);
-  // const totalWins = progressData.reduce((acc, item) => acc + item.wins, 0);
-  // const totalLosses = progressData.reduce((acc, item) => acc + item.lose, 0);
-  // const { firstPlayed, streak, consistency } = progress;
-
   return (
     <>
       <Header />
@@ -87,38 +95,66 @@ export const ProgressHistory = () => {
 
         {/* Subject-wise Performance */}
         <h4 className="text-center my-4">Subject-wise Performance</h4>
-        <div className="row">
-          <div className="col-12 col-md-6">
-            <div className="list-group mb-5">
+        <div className="row my-5">
+          <div className="col-12 col-lg-6 mb-3">
+            <div className="list-group">
               {
-                  progressData.map((item, index) => (
-                    <div key={index} className="list-group-item">
-                      <h5 className="mb-1">{item.subject}</h5>
+                progressData.map((item, index) => (
+                  <div key={index} className="list-group-item list-group-item-action align-items-start">
+                    <h5 className="mb-1">{item.subject}</h5>
+                    <div className="progress mb-2">
+                      <div className="progress-bar bg-success" style={{ width: `${(item.wins / item.gamesPlayed) * 100}%` }} > {item.wins} Wins </div>
+                    </div>
+                    <div className='d-flex justify-content-between'>
                       <p className="mb-2">Games Played: {item.gamesPlayed}</p>
-                      <div className="progress mb-2">
-                        <div className="progress-bar bg-success" style={{ width: `${(item.wins / item.gamesPlayed) * 100}%` }} > {item.wins} Wins </div>
-                      </div>
+
                       <p className="text-muted">Losses: {item.lose}</p>
                     </div>
-                  ))
+                  </div>
+                ))
               }
             </div>
           </div>
-          <div className="col-12 col-md-6">
-            <div className="card text-center shadow-sm p-3 my-5">
-              <div className="card-body">
-                <h5 className="card-title mb-3">Player Progress</h5>
-                <p className="card-text">
-                  <strong>First Played:</strong> { }
-                </p>
-                <p className="card-text ">
-                  <strong>Current Streak:</strong> { } days 🔥
-                </p>
-                <p className="card-text">
-                  <strong>Consistency:</strong> { }% 📈
-                </p>
+          <div className="col-12 col-lg-6 mb-3">
+            <div className="p-3 border rounded-3 bg-light shadow-sm h-100">
+              <h4 className="mb-4 text-primary text-center fw-bolder">Summary</h4>
+              <ul className="list-group list-group-flush mb-3">
+                <li className="list-group-item d-flex justify-content-between p-3">
+                  <span>Total Subjects Played</span>
+                  <strong>{progressData.length}</strong>
+                </li>
+                <li className="list-group-item d-flex justify-content-between p-3">
+                  <span>Total Games Played</span>
+                  <strong>{progressData.reduce((acc, item) => acc + item.gamesPlayed, 0)}</strong>
+                </li>
+                <li className="list-group-item d-flex justify-content-between p-3">
+                  <span>📈 Best Performer</span>
+                  <strong>{topSubject?.subject || 'N/A'}</strong>
+                </li>
+                <li className="list-group-item d-flex justify-content-between p-3">
+                  <span>⚠️ Most Losses</span>
+                  <strong>{maxLossSubject?.subject || 'N/A'}</strong>
+                </li>
+                <li className="list-group-item d-flex justify-content-between p-3">
+                  <span>🏆 Win Rate</span>
+                  <strong>{((totals.totalWins / totals.totalGames) * 100).toFixed(1)}%</strong>
+                </li>
+              </ul>
+              {noWins.length > 0 && (
+                <div className="mb-4 mx-3">
+                  <p className="fw-bold text-danger">❌ No Wins Yet:</p>
+                  <ol className="ps-3 text-muted">
+                    {noWins.map((item, idx) => (
+                      <li className='py-1' key={idx}>{item.subject}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+              <div className="alert alert-info mt-3" role="alert">
+                <strong>Goal:</strong> {determineGoal()}
               </div>
             </div>
+
           </div>
         </div>
       </div>

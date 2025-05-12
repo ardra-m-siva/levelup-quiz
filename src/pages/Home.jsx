@@ -24,7 +24,6 @@ const Home = () => {
     try {
       const result = await getAllTestimonialApi()
       if (result.status == 200) {
-        console.log(result.data);
         setAllTestimonials(result.data)
       }
     } catch (err) {
@@ -107,7 +106,7 @@ const Home = () => {
                     scrollSnapAlign: 'start'
                   }}>
                     <Card className="h-100 shadow-sm border-0 rounded-4">
-                      <Card.Header className="fw-semibold py-2 px-3 bg-light border-0">💬 Testimonial</Card.Header>
+                      <Card.Header className="fw-semibold py-2 px-3 bg-light border-0">Testimonial 💬 </Card.Header>
                       <Card.Body className="py-3 px-3">
                         <blockquote className="blockquote mb-0" style={{ fontSize: '0.9rem' }}>
                           <p className="mb-2">

@@ -28,7 +28,7 @@ const Header = () => {
         <>
             <div className='container d-flex justify-content-between flex-wrap' style={{ background: '#11999E' }}>
                 <Link to={'/'} className='p-4 text-light fs-4 fw-bold text-decoration-none'> LevelUp <i className="fa-solid fa-terminal"></i></Link>
-                {isLogin ?
+                { isLogin ?
                     <div className='d-flex flex-wrap align-items-center justify-content-end gap-1'>
                         <Link to={'/about'} className='btn btn-outline-light me-3 fw-bold'>About</Link>
                         <Link to={'/contact'} className='btn btn-outline-light me-3 fw-bold'>Contact</Link>

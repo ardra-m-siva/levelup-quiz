@@ -129,7 +129,7 @@ const Game = () => {
                     <div className='p-2 d-flex justify-content-between'>
                         <Link to={'/dashboard'} className='btn text-start'><i className="fa-solid fa-arrow-left text-light fa-xl "></i></Link>
                         {/* help button */}
-                        <div className='btn'><i className="fa-solid fa-circle-info fa-2xl text-light"></i></div>
+                        <Link to={'/about'} className='btn'><i className="fa-solid fa-circle-info fa-2xl text-light"></i></Link>
                     </div>
                     {/* level  */}
                     <h2 className='text-center text-light pb-3 fw-bold'>Level <span>{level}</span></h2>
