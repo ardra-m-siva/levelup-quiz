@@ -22,14 +22,13 @@ const Game = () => {
     const navigate = useNavigate()
     const didFetch = useRef(false)
     const location = useLocation()
-    const [isCorrect, setIsCorrect]= useState(false)
+    const [isCorrect, setIsCorrect] = useState(false)
 
     const { subject, title, difficulty } = location.state
     const [progressData, setProgressData] = useState({ questionNo: 0, questions: "" })
     const { cTopic, setCTopic } = useContext(currentTopicContext)
     const { level, setLevel } = useContext(currentLevelContext)
-    const { isRight,setIsRight} = useContext(isAnswerRightContext)
-console.log("isRight Out",isRight);
+    const { isRight, setIsRight } = useContext(isAnswerRightContext)
 
 
     useEffect(() => {
@@ -81,7 +80,7 @@ console.log("isRight Out",isRight);
         setSelectedAnswer(selectedKey);
         setIsCorrect(isCorrectAnswer);
         setIsRight(isCorrectAnswer);
-        console.log("isRight In",isRight);
+        console.log("isRight In", isRight);
 
 
         setTimeout(async () => {

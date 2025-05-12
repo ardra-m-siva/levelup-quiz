@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Button, Modal, ProgressBar } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import Winlose from '../components/Winlose';
@@ -14,6 +14,7 @@ const ProgressQuiz = () => {
         description: ""
     });
     const { isRight, setIsRight } = useContext(isAnswerRightContext)
+    const apiCallDone = useRef(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -26,24 +27,23 @@ const ProgressQuiz = () => {
     const { questionNo, questions } = location.state //no of correct answer is in the questionNo say 7
     const visibleQuestion = questions.slice(0, questionNo + 1)  // need to visble the current question answer which gone wrong  say 8
 
-    console.log("questionNo", questionNo);
-    console.log("isRight ProgressQuiz", isRight);
-
-
-
-
     let percent = (isWin ? questionNo + 1 : questionNo) * 10
 
     useEffect(() => {
-        setIsWin((questionNo === 9) && isRight)
-    }, [questionNo, isRight])
+        const win = (questionNo == 9) && isRight;
+        setIsWin(win);
 
-    useEffect(() => {
-        const win = (questionNo === 9) && isRight;
-        setIsWin(win); 
-    
+        console.log("inside useEffect of Progres Quiz, win=",win, typeof win);
+        
+         if (cTopic && level && typeof win === "boolean" && !apiCallDone.current) {
+            apiCallDone.current = true; // Mark API call as done
+            console.log("inside useEffect of Progress Quiz, win=", win, typeof win);
+            sentProgressData(win);
+        }
+
+
         const outOfTen = win ? questionNo + 1 : questionNo;
-    
+
         // Set grade
         if (outOfTen >= 9) setGrade({ scored: "A+", description: "Excellent" });
         else if (outOfTen >= 8) setGrade({ scored: "A", description: "Very Good" });
@@ -51,39 +51,36 @@ const ProgressQuiz = () => {
         else if (outOfTen >= 6) setGrade({ scored: "C", description: "Average" });
         else if (outOfTen >= 5) setGrade({ scored: "D", description: "Below Average" });
         else setGrade({ scored: "F", description: "Fail" });
-    
-        sentProgressData(win);
-    }, [questionNo])
+
+    }, [questionNo, isRight, cTopic, level])
 
     const sentProgressData = async (win) => {
-        try{
-        let token = sessionStorage.getItem('token')
-        const reqHeader = {
-            "Authorization": `Bearer ${token}`
-        }
-        console.log("typeof win",typeof win);
+        try {
+            let token = sessionStorage.getItem('token')
+            const reqHeader = {
+                "Authorization": `Bearer ${token}`
+            }
 
-        if (!cTopic || !level || typeof win !== "boolean") {
-            console.error("Missing required data:", { cTopic, level, win });
-            return;
+            if (!cTopic || !level || typeof win !== "boolean") {
+                console.error("Missing required data:", { cTopic, level, win });
+                return;
+            }
+
+            const reqBody = {
+                subject: cTopic,
+                level: level,
+                isWin: win
+            }
+            console.log("sentProgressData called", { subject: cTopic, level, isWin });
+
+            const result = await addProgressOfSubject(reqHeader, reqBody)
+            if (result.status == 200) {
+                console.log(result.data);
+            }
+        } catch (err) {
+            console.log(err);
+
         }
-        
-        console.log("win sentProgressData", win);
-        console.log("level sentProgressData", level);
-        const reqBody = {
-            subject: cTopic,
-            level: level,
-            isWin: win
-        }
-  
-        const result = await addProgressOfSubject(reqHeader, reqBody)
-        if (result.status == 200) {
-            console.log(result.data);
-        }
-       }catch(err){
-        console.log(err);
-        
-       }
     }
 
     return (
@@ -109,7 +106,7 @@ const ProgressQuiz = () => {
                     </div>
                     <div className='d-flex justify-content-center my-5'><ProgressBar className='w-50' striped variant="success" now={percent} /></div>
                     <div className='d-flex justify-content-evenly'>
-                        <Link to={'/'} className='btn btn-danger'>Quit</Link>
+                        <Link onClick={() => sessionStorage.removeItem('claimedReward')} to={'/'} className='btn btn-danger'>Quit</Link>
                         <Link onClick={() => sessionStorage.removeItem('claimedReward')} to={'/dashboard'} className='btn btn-primary'>Restart</Link>
                     </div>
                     <hr className='my-5' />

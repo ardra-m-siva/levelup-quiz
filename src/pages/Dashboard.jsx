@@ -25,8 +25,8 @@ const Dashboard = () => {
                                 <h3 className="fw-bold">Start Learning</h3>
                                 <select value={subjectInfo.subject} onChange={e => setSubjectInfo({ ...subjectInfo, subject: e.target.value })} name="subject" id="" className='form-select my-3' >
                                     <option value="" selected disabled hidden >Select Subject</option>
-                                    {[  "Linux", "Bash", "Docker", "React", "Nodejs", "Next.js", "VueJs", "Mysql", "HTML", "JavaScript", "Python", "Django" ].map((subject, index) => (
-                                        <option key={index} value={subject.toLowerCase()}>
+                                    {[  "Linux", "Bash", "Docker", "React", "Nodejs", "Next.js", "VueJs", "Mysql", "HTML", "Javascript", "Python", "Django" ].map((subject, index) => (
+                                        <option key={index} value={subject.toLowerCase().trim()}>
                                             {subject}
                                         </option>
                                     ))}

@@ -87,7 +87,7 @@ const Home = () => {
                     <Card.Text>
                       {lesson.description}
                     </Card.Text>
-                    <Button onClick={() => handleSubject(lesson.id, lesson.title)} className='mt-auto' style={{ backgroundColor: '#11999E' }}>Start Quizz</Button>
+                    <Button onClick={() => handleSubject(lesson.id.toLowerCase().trim(), lesson.title)} className='mt-auto' style={{ backgroundColor: '#11999E' }}>Start Quizz</Button>
                   </Card.Body>
                 </Card>
               </div>

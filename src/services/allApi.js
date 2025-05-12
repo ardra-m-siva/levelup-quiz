@@ -67,7 +67,9 @@ export const addProgressOfSubject = (reqHeaders,reqBody) => {
 export const addTestimonialApi = (reqBody) => {
     return commonApi('POST', `${serverUrl}/add-testimonial`, reqBody)
 }
-
 export const getAllTestimonialApi=()=>{
     return commonApi('GET', `${serverUrl}/get-testimonial`, {})  
+}
+export const getAllProgressDetailsApi=(reqHeaders)=>{
+    return commonApi('GET', `${serverUrl}/game-progress`,{},reqHeaders)  
 }
