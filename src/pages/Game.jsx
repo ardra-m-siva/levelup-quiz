@@ -61,8 +61,6 @@ const Game = () => {
         console.log("inside fetchQuestions");
         try {
             const response = await fetchQuestionsApi(difficulty, subject)
-            console.log(response.data);
-
             setQuestions(response.data);
             setProgressData({ ...progressData, questions: response.data })
             setIsLoaded(true);
