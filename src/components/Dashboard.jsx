@@ -1,20 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
+import { allTestimonialCountApi, allUserCountApi } from '../services/allApi';
 
 const Dashboard = () => {
+    const [counts, setCounts] = useState({
+        userCount: 0,
+        testimonialCount: 0,
+    })
+    const token = sessionStorage.getItem("token");
+    const reqHeaders = {
+        Authorization: `Bearer ${token}`,
+    }
 
-    const dashboardData = [ 
-        { title: 'Total Users', value: '1245', variant: 'light' },
-        { title: 'Subjects', value: '12', variant: 'secondary' },
-        { title: 'Added Questions', value: '3200', variant: 'info' },
-        { title: 'Total Testimonial', value: '120', variant: 'dark' }
+    useEffect(() => {
+        getAllUserCount()
+        getAllTestimonialCount()
+    }, [])
+
+    const getAllUserCount = async () => {
+        try {
+            const result = await allUserCountApi(reqHeaders)
+            console.log(result.data);
+            setCounts(prev =>({ ...prev, userCount: result.data }))
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const getAllTestimonialCount = async () => {
+        try {
+            const result = await allTestimonialCountApi(reqHeaders)
+            console.log(result.data);
+            setCounts(prev=>({ ...prev, testimonialCount: result.data }))
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const dashboardData = [
+        { title: 'Total Users', value: counts?.userCount, variant: 'light' ,text:"Admin is excluded"},
+        { title: 'Subjects', value: '12', variant: 'secondary',text:"" }, //not added 
+        { title: 'Added Questions', value: '3200', variant: 'info',text:"" }, //not added
+        { title: 'Total Testimonial', value: counts?.testimonialCount, variant: 'dark' ,text:""} 
     ];
 
     return (
         < >
             <h4>Dashboard</h4>
             <div className="row">
-                {dashboardData.map(({ title, value, variant }) => (
+                {dashboardData.map(({ title, value, variant ,text}) => (
                     <div className="col-lg-3" key={title}>
                         <Card
                             bg={variant.toLowerCase()}
@@ -26,8 +58,7 @@ const Dashboard = () => {
                             <Card.Body>
                                 <Card.Title className='fs-2'>{value} </Card.Title>
                                 <Card.Text>
-                                    Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.
+                                    {text}
                                 </Card.Text>
                             </Card.Body>
                         </Card>

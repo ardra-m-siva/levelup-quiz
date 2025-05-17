@@ -3,7 +3,11 @@ import { getAllTestimonialDetailApi, updateTestimonialCheckApi, updateTestimonia
 
 const Testimonials = () => {
     const [allTestimonials, setAllTestimonials] = useState([])
-    const [statusState,setStatusState]=useState(false)
+    const [statusState, setStatusState] = useState(false)
+    const token = sessionStorage.getItem('token')
+    const reqHeader = {
+        "Authorization": `Bearer ${token}`
+    }
 
     useEffect(() => {
         getAllTestimonials()
@@ -11,10 +15,6 @@ const Testimonials = () => {
 
     const getAllTestimonials = async () => {
         try {
-            const token = sessionStorage.getItem('token')
-            const reqHeader = {
-                "Authorization": `Bearer ${token}`
-            }
             const result = await getAllTestimonialDetailApi(reqHeader)
             if (result.status == 200) {
                 console.log(result.data);
@@ -27,13 +27,7 @@ const Testimonials = () => {
 
     const handleCheck = async (id) => {
         try {
-            const token = sessionStorage.getItem('token')
-            const reqHeader = {
-                "Authorization": `Bearer ${token}`
-            }
-                console.log(id);
-
-            const result = await updateTestimonialCheckApi({id},reqHeader)
+            const result = await updateTestimonialCheckApi({ id }, reqHeader)
             setStatusState(result.data)
         } catch (error) {
             console.log(error);
@@ -42,11 +36,7 @@ const Testimonials = () => {
 
     const handleCross = async (id) => {
         try {
-            const token = sessionStorage.getItem('token')
-            const reqHeader = {
-                "Authorization": `Bearer ${token}`
-            }
-            const result = await updateTestimonialCrossApi({id},reqHeader)
+            const result = await updateTestimonialCrossApi({ id }, reqHeader)
             setStatusState(result.data)
         } catch (error) {
             console.log(error);
@@ -75,8 +65,8 @@ const Testimonials = () => {
                                     <td>{
                                         item.status == "pending" ? (
                                             <div className='d-flex'>
-                                                <button onClick={()=>handleCheck(item._id)} className='btn btn-success me-1'><i className="fa-solid fa-check"></i></button>
-                                                <button onClick={()=>handleCross(item._id)} className='btn btn-danger'><i className="fa-solid fa-xmark"></i></button>
+                                                <button onClick={() => handleCheck(item._id)} className='btn btn-success me-1'><i className="fa-solid fa-check"></i></button>
+                                                <button onClick={() => handleCross(item._id)} className='btn btn-danger'><i className="fa-solid fa-xmark"></i></button>
                                             </div>
                                         ) : item.status == "approved" ? (
                                             <button className='btn btn-success'>Approved</button>

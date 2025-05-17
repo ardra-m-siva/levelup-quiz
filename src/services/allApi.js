@@ -89,3 +89,11 @@ export const updateTestimonialCheckApi=(id,reqHeaders)=>{
 export const updateTestimonialCrossApi=(id,reqHeaders)=>{
     return commonApi('PUT', `${serverUrl}/cross-testimonial`,id,reqHeaders)   //for the admin section
 }
+
+export const allUserCountApi=(reqHeaders)=>{
+    return commonApi('GET', `${serverUrl}/user-count`,{},reqHeaders)   //for the admin section
+}
+
+export const allTestimonialCountApi=(reqHeaders)=>{
+    return commonApi('GET', `${serverUrl}/testimonial-count`,{},reqHeaders)   //for the admin section
+}
