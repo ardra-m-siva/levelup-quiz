@@ -75,7 +75,7 @@ const Profile = () => {
   const handleLogout = () => {
     sessionStorage.clear()
     // Show feedback
-    toast.error("You have been logging out.", { autoClose: 2000});
+    toast.warn("You have been logging out.", { autoClose: 2000,className:'custom-toast'});
 
     // Delay navigation to allow toast to be seen
     setTimeout(() => {

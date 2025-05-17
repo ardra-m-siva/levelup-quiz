@@ -73,3 +73,8 @@ export const getAllTestimonialApi=()=>{
 export const getAllProgressDetailsApi=(reqHeaders)=>{
     return commonApi('GET', `${serverUrl}/game-progress`,{},reqHeaders)  
 }
+
+// admin panel
+export const getAllUserDetailsApi=(reqHeaders)=>{
+    return commonApi('GET', `${serverUrl}/get-user`,{},reqHeaders)  
+}

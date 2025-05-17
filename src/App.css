@@ -130,4 +130,10 @@ ul {
   color: #fff !important;
 }
 
+/* admin */
+
+.admin-list li{
+padding:8px 5px ;
+cursor: pointer;
+}
 

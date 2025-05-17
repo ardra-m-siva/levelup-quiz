@@ -28,13 +28,18 @@ const Auth = ({ isLogin }) => {
         if (payload.email && payload.password) {
           const result = await loginApi(payload)
           if (result.status == 200) {
+            const user=result.data.user
             setLoginedToSite(true)
-            sessionStorage.setItem("user", JSON.stringify(result.data.user))
+            sessionStorage.setItem("user", JSON.stringify(user))
             sessionStorage.setItem("token", result.data.token)
             setTimeout(() => {
               setUserDetails({ username: "", email: "", password: "" })
               setLoginedToSite(false)
-              navigate('/dashboard')
+              if (user.role === "Admin") {
+            navigate('/admin');
+          } else {
+            navigate('/dashboard');
+          }
             }, 2000)
           } else {
             toast.error(result.response.data)
