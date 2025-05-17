@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap'
 
 const Dashboard = () => {
 
-    const dashboardData = [
+    const dashboardData = [ 
         { title: 'Total Users', value: '1245', variant: 'light' },
         { title: 'Subjects', value: '12', variant: 'secondary' },
         { title: 'Added Questions', value: '3200', variant: 'info' },

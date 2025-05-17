@@ -78,3 +78,14 @@ export const getAllProgressDetailsApi=(reqHeaders)=>{
 export const getAllUserDetailsApi=(reqHeaders)=>{
     return commonApi('GET', `${serverUrl}/get-user`,{},reqHeaders)  
 }
+export const getAllTestimonialDetailApi=(reqHeaders)=>{
+    return commonApi('GET', `${serverUrl}/all-testimonial`,{},reqHeaders)   //for the admin section
+}
+
+export const updateTestimonialCheckApi=(id,reqHeaders)=>{
+    return commonApi('PUT', `${serverUrl}/check-testimonial`,id,reqHeaders)   //for the admin section
+}
+
+export const updateTestimonialCrossApi=(id,reqHeaders)=>{
+    return commonApi('PUT', `${serverUrl}/cross-testimonial`,id,reqHeaders)   //for the admin section
+}
