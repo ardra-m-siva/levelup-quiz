@@ -22,7 +22,6 @@ export const ProgressHistory = () => {
         "Authorization": `Bearer ${token}`
       }
       const result = await getAllProgressDetailsApi(reqHeader)
-      console.log(result.data);
 
       const subjectProgress = result.data?.subjectProgress || [];
       const processedProgressData = subjectProgress.map(item => ({ ...item, gamesPlayed: (item.wins || 0) + (item.lose || 0) }))

@@ -10,6 +10,7 @@ import serverUrl from '../services/serverUrl'
 const Header = () => {
     const [isLogin, setIsLogin] = useState(false)
     const [show, setShow] = useState(false);
+    const [role, setRole] = useState("");
     const [updatedProfileImg, setUpdatedProfileImg] = useState("")
     const location = useLocation()
 
@@ -19,6 +20,7 @@ const Header = () => {
     useEffect(() => {
         const data = JSON.parse(sessionStorage.getItem('user'))
         if (data) {
+            setRole(data.role)
             setIsLogin(true)
             setUpdatedProfileImg(data.profilePic)
         }
@@ -28,7 +30,7 @@ const Header = () => {
         <>
             <div className='container d-flex justify-content-between flex-wrap' style={{ background: '#11999E' }}>
                 <Link to={'/'} className='p-4 text-light fs-4 fw-bold text-decoration-none'> LevelUp <i className="fa-solid fa-terminal"></i></Link>
-                { isLogin ?
+                {isLogin ?
                     <div className='d-flex flex-wrap align-items-center justify-content-end gap-1'>
                         <Link to={'/about'} className='btn btn-outline-light me-3 fw-bold'>About</Link>
                         <Link to={'/contact'} className='btn btn-outline-light me-3 fw-bold'>Contact</Link>
@@ -51,8 +53,17 @@ const Header = () => {
                                     <Profile />
                                 </Card>
                                 <div className='text-dark rounded text-center mx-4' >
-                                    <Link to={'/history'} className='btn btn-secondary my-3 py-2 w-100'><h6>Track Progress <i className="fa-solid fa-chart-simple"></i></h6></Link>
+                                    <Link to={'/history'} className='btn btn-secondary mt-5 py-2 w-100'><h6>Track Progress <i className="fa-solid fa-chart-simple"></i></h6></Link>
                                 </div>
+                                {
+                                    role == 'Admin' ?
+                                        <div className='mx-4'>
+                                            <Link to={'/admin'} className='btn btn-secondary mt-3 py-2 w-100'>
+                                                <h6>Admin Dashboard <i className="fa-solid fa-chart-line"></i></h6>
+                                            </Link>
+                                        </div>
+                                        : null
+                                }
                             </Offcanvas.Body>
                         </Offcanvas>
                     </div>

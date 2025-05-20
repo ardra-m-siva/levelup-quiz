@@ -4,7 +4,9 @@ import Users from '../components/Users';
 import Testimonials from '../components/Testimonials';
 import Subjects from '../components/Subjects';
 import Questions from '../components/Questions';
+import { Link } from 'react-router-dom';
 const AdminDashboard = () => {
+  
   const [activeSection, setActiveSection] = useState('Dashboard');
 
   const menuItems = [
@@ -36,7 +38,7 @@ const AdminDashboard = () => {
     <div className='container-fluid'>
       <div className='row'>
         <div className="col-12 col-md-3 col-lg-2 text-white p-2 vh-100" style={{ backgroundColor: '#11999E' }}>
-          <h5 className='fw-bolder ps-2 mt-3'>LevelUp <i className="fa-solid fa-terminal"></i></h5>
+          <h5 className='fw-bolder ps-2 mt-3'><Link to={'/'} className='text-decoration-none text-white'>LevelUp <i className="fa-solid fa-terminal"></i></Link></h5>
           <ul className='fw-bolder p-2 admin-list list-unstyled'>
             {menuItems.map(({ label, icon }) => (
               <li key={label}>

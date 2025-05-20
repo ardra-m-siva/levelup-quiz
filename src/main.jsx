@@ -7,10 +7,10 @@ import SubjectContext from './context/subjectContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <SubjectContext>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </SubjectContext>
+      <SubjectContext>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SubjectContext>
   </StrictMode>,
 )

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className='text-white fw-semibold p-5' style={{ backgroundColor: '#11999E' }}>
+        <div className='text-white fw-semibold p-5 mt-2' style={{ backgroundColor: '#11999E' }}>
             <div className="row gy-4">
                 <div className="col-12 col-lg-4">
                     <h2 className='bold'>LevelUp <i className="fa-solid fa-terminal"></i></h2>

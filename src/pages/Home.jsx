@@ -96,7 +96,7 @@ const Home = () => {
         </div>
         <div className="container my-5">
           <h2 className="text-center fw-bold mb-4">Testimonials</h2>
-          <div  className="d-flex flex-nowrap mx-2 px-2 py-2 gap-2  hide-scrollbar" 
+          <div  className="d-flex flex-nowrap mx-2 px-2 py-2 gap-2  hide-scrollbar justify-content-center" 
           style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch',overflowY:'hidden'}}>
             {
               allTestimonials?.length > 0 ?
