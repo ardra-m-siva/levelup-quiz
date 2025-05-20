@@ -16,7 +16,6 @@ const Users = () => {
             }
             const result = await getAllUserDetailsApi(reqHeader)            
             if (result.status == 200) {
-                console.log(result.data);
                 setAllUsers(result.data);
             }
         } catch (error) {

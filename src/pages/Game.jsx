@@ -77,8 +77,6 @@ const Game = () => {
         setSelectedAnswer(selectedKey);
         setIsCorrect(isCorrectAnswer);
         setIsRight(isCorrectAnswer);
-        console.log("isRight In", isRight);
-
 
         setTimeout(async () => {
             if (isCorrectAnswer) {

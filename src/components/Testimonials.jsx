@@ -17,7 +17,6 @@ const Testimonials = () => {
         try {
             const result = await getAllTestimonialDetailApi(reqHeader)
             if (result.status == 200) {
-                console.log(result.data);
                 setAllTestimonials(result.data);
             }
         } catch (error) {

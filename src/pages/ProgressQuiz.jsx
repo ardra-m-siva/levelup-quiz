@@ -32,12 +32,9 @@ const ProgressQuiz = () => {
     useEffect(() => {
         const win = (questionNo == 9) && isRight;
         setIsWin(win);
-
-        console.log("inside useEffect of Progres Quiz, win=",win, typeof win);
         
          if (cTopic && level && typeof win === "boolean" && !apiCallDone.current) {
             apiCallDone.current = true; // Mark API call as done
-            console.log("inside useEffect of Progress Quiz, win=", win, typeof win);
             sentProgressData(win);
         }
 
@@ -71,7 +68,6 @@ const ProgressQuiz = () => {
                 level: level,
                 isWin: win
             }
-            console.log("sentProgressData called", { subject: cTopic, level, isWin });
 
             const result = await addProgressOfSubject(reqHeader, reqBody)
             if (result.status == 200) {

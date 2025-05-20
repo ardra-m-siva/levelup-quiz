@@ -55,8 +55,6 @@ const Profile = () => {
         }
         try {
           const result = await editProfileApi(reqBody, reqHeaders)
-          console.log(result);
-
           if (result.status == 200) {
             sessionStorage.setItem("user", JSON.stringify(result.data))
             setPlayer(result.data);

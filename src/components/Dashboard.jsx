@@ -20,7 +20,6 @@ const Dashboard = () => {
     const getAllUserCount = async () => {
         try {
             const result = await allUserCountApi(reqHeaders)
-            console.log(result.data);
             setCounts(prev =>({ ...prev, userCount: result.data }))
         } catch (err) {
             console.log(err);
@@ -29,17 +28,16 @@ const Dashboard = () => {
     const getAllTestimonialCount = async () => {
         try {
             const result = await allTestimonialCountApi(reqHeaders)
-            console.log(result.data);
             setCounts(prev=>({ ...prev, testimonialCount: result.data }))
         } catch (err) {
             console.log(err);
         }
     }
     const dashboardData = [
-        { title: 'Total Users', value: counts?.userCount, variant: 'light' ,text:"Admin is excluded"},
-        { title: 'Subjects', value: '12', variant: 'secondary',text:"" }, //not added 
-        { title: 'Added Questions', value: '3200', variant: 'info',text:"" }, //not added
-        { title: 'Total Testimonial', value: counts?.testimonialCount, variant: 'dark' ,text:""} 
+        { title: 'Total Users', value: counts?.userCount, variant: 'light' ,text:"All users excluding the Admins"},
+        { title: 'Internal Subjects', value: '0', variant: 'secondary',text:"Subjects added manually only" }, //not added 
+        { title: 'Added Questions', value: '0', variant: 'info',text:"Questions added to manually added subjects" }, //not added
+        { title: 'Total Testimonial', value: counts?.testimonialCount, variant: 'dark' ,text:"All testimonials received through the site"} 
     ];
 
     return (

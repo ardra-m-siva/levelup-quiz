@@ -33,14 +33,9 @@ const Winlose = ({ isWin }) => {
                 const reqHeaders = {
                     "Authorization": `Bearer ${token}`
                 }
-                let result = await randomGift.api(reqHeaders);
-                console.log(result.data);
+                 await randomGift.api(reqHeaders);
                 sessionStorage.setItem('claimedReward', randomGift.name);
-
-                console.log(`Reward "${randomGift.name}" successfully saved to database!`);
-            }
-            // Call the API function dynamically
-
+            }  
         } catch (error) {
             console.error(`Error saving reward: ${randomGift.name}`, error);
         }

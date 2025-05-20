@@ -39,7 +39,6 @@ const Gifts = ({ setTimeLeft, setCurrentQuestionIndex, handleNavigation, handleT
         if (gifts.extraTime > 0) {
             try {
                 const result = await removeAddTimeGiftsApi(reqHeaders)
-                console.log(result.data);
                 if (result.status == 200) {
                     getAllGifts(reqHeaders)
                     setTimeLeft(prevTime => {
